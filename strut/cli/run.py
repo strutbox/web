@@ -40,6 +40,7 @@ def run(dev, bind, workers):
 
     if dev:
         options.update(dev_options)
+        os.environ['STRUT_DEBUG'] = '1'
 
     for k, v in options.items():
         if v is None:

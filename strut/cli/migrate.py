@@ -2,8 +2,9 @@ import click
 
 
 @click.command()
+@click.option('--generate', is_flag=True)
 @click.argument('migration_name', required=False)
-def migrate(migration_name):
+def migrate(generate, migration_name):
     'Apply database migrations.'
     # We need to explicitly setup Django first, otherwise migrate
     # will complain about not having any apps loaded yet.
@@ -11,6 +12,10 @@ def migrate(migration_name):
     django.setup()
 
     from django.core.management import call_command
+
+    if generate:
+        call_command('makemigrations', args=['strut'])
+
     call_command(
         'migrate',
         app_label=None,

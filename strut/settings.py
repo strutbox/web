@@ -14,6 +14,11 @@ import os
 import dj_database_url
 from click import types
 
+try:
+    from uwsgi import opt as uwsgi_options
+except ImportError:
+    uwsgi_options = {}
+
 _type = type
 
 
@@ -27,8 +32,16 @@ def env(key, default='', type=None):
     try:
         rv = env._cache[key]
     except KeyError:
+        # We don't want/can't pop off env variables when
+        # uwsgi is in autoreload mode, otherwise it'll have an empty
+        # env on reload
+        if uwsgi_options.get('py-autoreload') == b'1':
+            fn = os.environ.__getitem__
+        else:
+            fn = os.environ.pop
+
         try:
-            rv = os.environ.pop(key)
+            rv = fn(key)
             env._cache[key] = rv
         except KeyError:
             rv = default
@@ -37,7 +50,6 @@ def env(key, default='', type=None):
         type = types.convert_type(_type(default))
 
     return type(rv)
-
 
 env._cache = {}
 
@@ -66,6 +78,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'strut.apps.StrutConfig',
 ]
 
 MIDDLEWARE = [

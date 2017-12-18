@@ -1,0 +1,3 @@
+export STRUT_DEBUG=1
+export STRUT_SECRET_KEY=test
+export STRUT_DATABASE_URL=postgres://postgres@127.0.0.1:5432/strut

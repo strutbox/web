@@ -32,6 +32,11 @@ class Organization(Model):
     class Meta:
         unique_together = ("slug",)
 
+    def associate_device(self, device):
+        from strut.models import DeviceAssociation
+
+        return DeviceAssociation.objects.get_or_create(organization=self, device=device)
+
 
 class OrganizationMember(Model):
     @enum.unique

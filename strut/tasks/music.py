@@ -55,7 +55,7 @@ def process_songjob(job_id):
     try:
         subprocess.check_output(cmd)
         file = File.objects.upload_from_filename(output)
-        Song.objects.filter(id=song.id).update(file=file)
+        Song.objects.filter(id=song.id).update(file=file, is_active=True)
     except Exception as e:
         import traceback
 

@@ -46,6 +46,24 @@ class SongMeta(Model):
         return self.data is not None and self.last_synced is not None
 
 
+class SongQuerySet(models.QuerySet):
+    def pick_for_user(self, user):
+        return self.pick_for_user_id(user.id)
+
+    def pick_for_user_id(self, user_id):
+        return (
+            self.filter(
+                is_active=True,
+                playlistsong__playlist__playlistsubscription__user_id=user_id,
+                playlistsong__playlist__playlistsubscription__is_active=True,
+                meta__last_synced__isnull=False,
+                file__isnull=False,
+            )
+            .order_by("?")[0:1]
+            .get()
+        )
+
+
 class Song(Model):
     meta = models.ForeignKey(SongMeta, models.CASCADE)
     file = models.ForeignKey("File", models.CASCADE, null=True)
@@ -53,6 +71,8 @@ class Song(Model):
     length = models.PositiveIntegerField()
     date_created = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=False)
+
+    objects = SongQuerySet.as_manager()
 
     class Meta:
         unique_together = ("meta", "start", "length")
@@ -161,19 +181,3 @@ class SongJob(Model):
 class FakeSongJob:
     def record(*args, **kwargs):
         return
-
-
-def pick_song_for_user(user):
-    from strut.models import File
-
-    return File(
-        checksum=Song.objects.filter(
-            playlistsong__playlist__playlistsubscription__user=user,
-            playlistsong__playlist__playlistsubscription__is_active=True,
-            meta__last_synced__isnull=False,
-            file__isnull=False,
-        )
-        .select_related("file")
-        .order_by("?")
-        .values_list("file__checksum", flat=True)[0]
-    )

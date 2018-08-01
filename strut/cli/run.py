@@ -52,7 +52,7 @@ def run():
 
 @run.command()
 @click.option("--dev", default=False, is_flag=True)
-@click.option("--bind", default="127.0.0.1:8000", type=Address)
+@click.option("--bind", default="0.0.0.0:8000", type=Address)
 @click.option("--workers", default=1)
 def web(dev, bind, workers):
     "Start the webserver."

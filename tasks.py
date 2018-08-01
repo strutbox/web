@@ -44,6 +44,8 @@ def load_fixture(ctx):
 
     strut.setup()
 
+    from cryptography.hazmat.primitives import serialization
+    from cryptography.hazmat.backends import default_backend
     from strut import models
 
     user = models.User.objects.create(email="m@robenolt.com", is_superuser=True)
@@ -53,12 +55,25 @@ def load_fixture(ctx):
     )
     models.OrganizationDomain.objects.create(organization=org, domain="robenolt.com")
 
-    device = models.Device.objects.create(
-        name="Matt Device", serial="0000000000000000", pubkey=b""
+    with open("scratch/client.pub", "rb") as fp:
+        device = models.Device.objects.create(
+            name="Matt Device",
+            serial="0000000000000000",
+            pubkey=serialization.load_pem_public_key(
+                fp.read(), backend=default_backend()
+            ).public_bytes(
+                encoding=serialization.Encoding.DER,
+                format=serialization.PublicFormat.SubjectPublicKeyInfo,
+            ),
+        )
+
+    org.associate_device(device)
+    lock = models.LockitronLock.objects.create(
+        organization=org, lock_id="lock-abc123", name="Matt Lock"
     )
-    models.DeviceAssociation.objects.create(device=device, organization=org)
-    models.LockitronLock.objects.create(lock_id="lock-abc123", name="Matt Lock")
-    models.LockitronUser.objects.create(user_id="user-abc123", email=user.email)
+    models.LockitronUser.objects.create(
+        lock=lock, user_id="user-abc123", email=user.email
+    )
 
     playlist = models.Playlist.objects.create(owner=user)
     models.PlaylistSubscription.objects.create(user=user, playlist=playlist)
@@ -152,3 +167,32 @@ def rebuild(ctx):
         pass
     createdb(ctx)
     migrate(ctx)
+
+
+@task
+def lockitron(ctx):
+    import requests
+    import sys
+    from time import time
+    from uuid import uuid4
+
+    resp = requests.post(
+        "http://127.0.0.1:8000/api/hooks/lockitron/",
+        json={
+            "timestamp": int(time()),
+            "data": {
+                "activity": {"id": str(uuid4()), "kind": "lock-updated-unlocked"},
+                "lock": {"id": "lock-abc123", "name": "Matt Lock", "status": "unlock"},
+                "user": {
+                    "id": "user-abc123",
+                    "email": "m@robenolt.com",
+                    "first_name": "Matt",
+                    "last_name": "Robenolt",
+                },
+            },
+        },
+    )
+    sys.stdout.write(f"< HTTP/1.1 {resp.status_code}\n")
+    for k, v in resp.headers.items():
+        sys.stdout.write(f"< {k}: {v}\n")
+    sys.stdout.write(f"\n{resp.text}\n")

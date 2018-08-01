@@ -5,7 +5,6 @@ import click
 def shell():
     "Start interactive python shell."
 
-
     import strut
 
     strut.setup()
@@ -19,7 +18,7 @@ def shell():
 
     from strut.db.utils import last_query, explain
 
-    py_version = lambda: sys.version.split('\n', 1)[0]
+    py_version = lambda: sys.version.split("\n", 1)[0]
 
     banner = f"""\
    _____________  __  ________

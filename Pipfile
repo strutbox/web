@@ -32,7 +32,6 @@ channels-redis = "*"
 [dev-packages]
 invoke = "*"
 ipython = "*"
-factory-boy = "*"
 
 [requires]
 python_version = "3.7"

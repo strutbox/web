@@ -28,6 +28,10 @@ class Device(Model):
     class Meta:
         unique_together = ("serial",)
 
+    def save(self, *args, **kwargs):
+        self.public_key()  # Make sure our pubkey is valid
+        return super().save(*args, **kwargs)
+
     def public_key(self):
         return serialization.load_der_public_key(
             bytes(self.pubkey), backend=default_backend()
@@ -59,7 +63,6 @@ class Device(Model):
         return self.encrypt_bytes(zlib.compress(msgpack.packb(data)))
 
     def send_message(self, message):
-        assert self.serial
         async_to_sync(channel_layer.group_send)(
             self.serial, {"type": "device.send", "bytes": self.build_message(message)}
         )

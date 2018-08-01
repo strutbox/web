@@ -1,6 +1,10 @@
-.git
+.*
 *.egg-info
 *.pyc
 __pycache__
-.envrc
-.envrc.sample
+Dockerfile
+tasks.py
+requirements-dev.txt
+node_modules/
+pyproject.toml
+scratch/

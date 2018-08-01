@@ -1,0 +1,300 @@
+* {
+  box-sizing: border-box;
+}
+
+body, html {
+  font-family: Blackout;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  background: #000;
+  padding: 0;
+  margin: 0;
+}
+
+/* Super trivial global state management */
+body.loading {
+  display: none;
+}
+
+body.logged-out .User-nav {
+  display: none;
+}
+
+body.logged-in #btn-login {
+  display: none;
+}
+
+body.logged-out .main {
+  display: none;
+}
+
+body.logged-in .login-prompt {
+  display: none;
+}
+/* */
+
+img {
+  max-width: 100%;
+}
+
+.App-wrapper {
+  background: #fff;
+}
+
+.App {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 60px 0 80px;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 1s ease;
+  height: 64px;
+}
+
+.App-header {
+  margin-bottom: 60px;
+}
+
+.App-footer {
+  font-family: sans-serif;
+  color: #7a7f83;
+  text-align: center;
+  padding: 60px 0;
+}
+
+.App-footer strong {
+  font-family: Blackout;
+  color: #fff;
+}
+
+.App-footer strong sup {
+  font-size: .5em;
+}
+
+.User-nav {
+  display: flex;
+  height: 64px;
+}
+
+.User-nav img {
+  width: 64px;
+  height: 64px;
+  transform: rotate(5deg) skewX(5deg);
+}
+
+.User-nav button {
+  transform: rotate(-6deg) skewX(5deg);
+  font-size: 22px;
+}
+
+.btn {
+  cursor: pointer;
+  font-family: Blackout;
+  border: 0;
+  border-radius: 0;
+  background: #000;
+  font-size: 18px;
+  color: #fff;
+  padding: 12px 24px;
+  transform: rotate(-4deg) skewX(5deg);
+}
+
+.btn:hover {
+  animation: Input-focus 1 .5s ease forwards;
+}
+
+.row {
+  clear: both;
+  display: flex;
+  margin-left: -40px;
+  margin-right: -40px;
+}
+
+.column {
+  margin-left: 40px;
+  margin-right: 40px;
+}
+
+.column:first-child {
+  width: 66.667%;
+}
+
+.column:last-child {
+  width: 33.33%;
+}
+
+.Input {
+  font-family: Blackout;
+  background: #FFE400;
+  border: 0;
+  font-size: 22px;
+  padding: 15px 20px;
+  transform: rotate(-2.2deg) skewX(3deg);
+  width: 100%;
+  transition: background-color .2s ease;
+}
+
+.Input::placeholder {
+  color: rgb(198, 170, 13);
+}
+
+.Input:focus {
+  background-color: #FF00B4;
+  outline: 0;
+  animation: Input-focus 1 .5s ease forwards;
+}
+
+.Input:focus::placeholder {
+  color: rgb(197, 5, 143);
+}
+
+.field {
+  margin-bottom: 40px;
+}
+
+h6, .field label {
+  font-size: 22px;
+  display: block;
+  margin: 0 0 24px;
+}
+
+
+.song-list {
+  margin-bottom: 50px;
+}
+
+.song {
+  position: relative;
+  display: flex;
+  background: rgb(215, 221, 227);
+  border: 0;
+  font-size: 22px;
+  padding: 15px 80px 15px 20px;
+  transform: rotate(-2.2deg) skewX(-3deg);
+  width: 100%;
+  transition: background-color .2s ease;
+  margin-bottom: 40px;
+}
+
+.song h6 {
+  margin-top: 2px;
+  margin-bottom: 6px;
+}
+
+.song-thumb {
+  width: 62px;
+  height: 48px;
+  margin-right: 20px;
+}
+
+.song-desc {
+  font-size: 14px;
+}
+
+.song .delete {
+  position: absolute;
+  right: 26px;
+  top: 26px;
+  opacity: 0.3;
+  transition: .15s ease opacity;
+}
+
+.song .delete:hover {
+  opacity: .75;
+}
+
+.modal-wrapper {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(255,255,255, .8);
+}
+
+.modal {
+  width: 600px;
+  background: #fff;
+  transform: rotate(2.2deg) skewX(3deg);
+  position: absolute;
+  left: 50%;
+  top: 20%;
+  margin-left: -300px;
+  box-shadow: 0 10px 30px rgba(0,0,0, .3);
+}
+
+.modal-header {
+  padding: 10px 30px;
+  background: #000;
+  color: #fff;
+}
+
+.modal-body {
+  padding: 30px 30px 0;
+  background: #fff;
+}
+
+.modal-footer {
+  padding: 10px 30px 30px;
+  overflow: hidden;
+}
+
+.pull-right {
+  float: right;
+}
+
+.modal-body .row {
+  margin: 0 -20px 15px;
+  align-items: center;
+}
+
+.modal-body .row em {
+  display: block;
+  color: #8d9398;
+  font-size: .8em;
+}
+
+.modal-body .column {
+  margin: 0 20px;
+}
+
+.modal-body .column:first-child {
+  width: 25%;
+}
+
+.modal-body .column:last-child {
+  width: 75%;
+}
+
+.modal-footer .btn {
+  transform: rotate(1.2deg) skewX(2deg)
+}
+
+.modal-body .Input {
+  font-size: 18px;
+  transform: rotate(-.5deg) skewX(-2deg)
+}
+
+.modal-body .Input:focus {
+  animation: none;
+}
+
+@keyframes App-logo-spin {
+  0% { transform: rotate(0deg) scale(.5); }
+  50% { transform: scale(1.2, 1.2); }
+  100% { transform: rotate(360deg) scale(.5); }
+}
+
+@keyframes Input-focus {
+  from { transform: rotate(2.2deg) skewX(3deg) scale(1); }
+  to { transform: rotate(-5.2deg) skewX(23deg) scale(1.4); }
+}
+@keyframes Input-focus-alt {
+  from { transform: rotate(2.2deg) skewX(3deg) scale(1); }
+  to { transform: rotate(-5.2deg) skewX(23deg) scale(1.4); }
+}
+
+.hidden {
+  display: none;
+}

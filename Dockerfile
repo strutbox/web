@@ -1,42 +1,52 @@
-FROM python:3.6.3-alpine
+FROM python:3.7.0-alpine3.8
 
 RUN addgroup -S strut && adduser -S -G strut strut
 
-ENV PIP_NO_CACHE_DIR off
-ENV PIP_DISABLE_PIP_VERSION_CHECK on
+ENV PIP_NO_CACHE_DIR=off \
+    PIP_DISABLE_PIP_VERSION_CHECK=on \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONOPTIMIZE=1
 
 RUN apk add --no-cache 'su-exec>=0.2'
 
 RUN mkdir -p /usr/src/strut
 WORKDIR /usr/src/strut
 
-COPY requirements-base.txt /usr/src/strut/
+COPY . /usr/src/strut
+
 RUN set -ex; \
     \
     apk add --no-cache --virtual .build-deps \
+        g++ \
         gcc \
+        libffi-dev \
         linux-headers \
         musl-dev \
         postgresql-dev \
     ; \
     \
-    pip install -r requirements-base.txt; \
+    export PIPENV_CACHE_DIR="$(mktemp -d)"; \
+    pip install pipenv==2018.7.1; \
+    pipenv install --deploy --system; \
     \
     apk del .build-deps; \
+    pip uninstall --yes \
+        pipenv \
+        virtualenv \
+        virtualenv-clone \
+    ; \
+    rm -r "$PIPENV_CACHE_DIR"; \
     \
     apk add --no-cache --virtual .run-deps \
+        libffi \
         libpq \
-    ;
-
-COPY requirements.txt /usr/src/strut/
-RUN pip install -r requirements.txt
-
-COPY . /usr/src/strut
-RUN pip install -e . && strut-web --help
+        libstdc++ \
+    ; \
+    strut --help
 
 ENTRYPOINT ["/usr/src/strut/docker-entrypoint.sh"]
 
 EXPOSE 8000
 
 ENV STRUT_BIND 0.0.0.0:8000
-CMD ["strut-web"]
+CMD ["strut"]

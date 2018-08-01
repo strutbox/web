@@ -1,0 +1,41 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+"e1839a8" = {path = ".", editable = true}
+Django = "==2.1rc1"
+channels = "*"
+click = "*"
+cryptography = "*"
+daphne = "*"
+dj-database-url = "*"
+google-cloud-storage = "*"
+hiredis = "*"
+jsonschema = "*"
+marshmallow = "*"
+msgpack = "*"
+petname = "*"
+psycopg2-binary = "*"
+python-rapidjson = "*"
+redis = "*"
+requests = "*"
+rq = "*"
+social-auth-app-django = "*"
+structlog = "*"
+uWSGI = "*"
+websockets = "*"
+youtube_dl = "*"
+channels-redis = "*"
+
+[dev-packages]
+invoke = "*"
+ipython = "*"
+factory-boy = "*"
+
+[requires]
+python_version = "3.7"
+
+[pipenv]
+allow_prereleases = true

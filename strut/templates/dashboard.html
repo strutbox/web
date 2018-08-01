@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" "text/css" href="{% static "fonts/fonts.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "app.css" %}">
+    <link rel="icon" href="{% static "favicon.png" %}" type="image/x-icon" />
+    <script>
+      window.Strut = {
+        settings: {
+          static: '{{ STATIC_URL }}',
+        },
+        initialData: {
+          user: {{ user|serialize }},
+          memberships: {{ memberships|serialize }},
+          songs: {{ songs|serialize }},
+          jobs: {{ jobs|serialize }},
+          playlists: {{ playlists|serialize }},
+        }
+      };
+    </script>
+    <title>STRUT</title>
+  </head>
+  <body>
+    <div class="App-wrapper">
+      <div class="App">
+        <div class="App-header">
+          <img class="App-logo" src="{% static "logo-black.svg" %}"  />
+          <div class="pull-right">
+            <div class="User-nav">
+              {% comment %}<img id="img-avatar" />{% endcomment %}
+              <form method="post" action="{% url "logout" %}">
+                {% csrf_token %}
+                <button class="btn">Log Out</button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+      <div id="app"></div>
+
+    </div>
+  </div>
+  <div class="App-footer">
+      The best part of waking up is <strong>STRUT<sup>™</sup></strong>, <strong>STRUT<sup>™</sup></strong>, <strong>STRUT<sup>™</sup></strong>, <strong>STRUT<sup>™</sup></strong>, <strong>STRUT<sup>™</sup></strong>.
+  </div>
+
+  <script src="{% static "vendor/preact/8.2.9/preact.min.js" %}"></script>
+  <script src="{% static "app.js" %}" type="module"></script>
+  </body>
+</html>

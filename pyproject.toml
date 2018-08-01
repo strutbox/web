@@ -1,0 +1,14 @@
+[tool.black]
+py36 = true
+include = '\.py$'
+exclude = '''
+/(
+    \.git
+  | \.venv
+  | _build
+  | build
+  | dist
+  | migrations
+)/
+'''
+

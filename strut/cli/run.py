@@ -1,62 +1,96 @@
+from typing import Tuple
+
 import click
 
+from dataclasses import dataclass
 
-@click.command()
-@click.option('--dev', default=False, is_flag=True)
-@click.option('--bind', default='127.0.0.1:8000')
-@click.option('--workers', default=1)
-def run(dev, bind, workers):
-    'Start the webserver.'
 
-    import os
-    import sys
+@dataclass
+class AddressType:
+    ipv4: Tuple[str, int]
+    fd: int
+    unix: str
 
-    try:
-        bind = os.environ['STRUT_BIND']
-    except KeyError:
-        pass
 
-    dev_options = {
-        'py-autoreload': 1,
-    }
+class AddressParamType(click.ParamType):
+    name = "address"
 
-    options = {
-        'auto-procname': True,
-        'die-on-term': True,
-        'disable-write-exception': True,
-        'enable-threads': True,
-        'http-socket': bind,
-        'ignore-sigpipe': True,
-        'ignore-write-errors': True,
-        'master': True,
-        'module': 'strut.wsgi:application',
-        'need-app': True,
-        'protocol': 'http',
-        'single-interpreter': True,
-        'thunder-lock': True,
-        'virtualenv': sys.prefix,
-        'workers': workers,
-    }
+    def __call__(self, value, param=None, ctx=None):
+        if value is None:
+            return (None, None)
+        return self.convert(value, param, ctx)
 
-    if dev:
-        options.update(dev_options)
-        os.environ['STRUT_DEBUG'] = '1'
+    def convert(self, value, param, ctx):
+        d = {"ipv4": None, "fd": None, "unix": None}
 
-    for k, v in options.items():
-        if v is None:
-            continue
-        key = 'UWSGI_' + k.upper().replace('-', '_')
-        if isinstance(v, str):
-            value = v
-        elif v is True:
-            value = 'true'
-        elif v is False:
-            value = 'false'
-        elif isinstance(v, int):
-            value = str(v)
-        else:
-            raise TypeError('Unknown option type: %r (%s)' % (k, type(v)))
+        try:
+            if value[:3] == "fd@":
+                d["fd"] = int(value[3:])
+            elif value[:1] == "/":
+                d["unix"] = value
+            else:
+                if ":" in value:
+                    host, port = value.split(":", 1)
+                    port = int(port)
+                else:
+                    host = value
+                    port = None
+                d["ipv4"] = host, port
+        except ValueError:
+            self.fail(f'"{value}" is not a valid address')
 
-        os.environ[key] = value
+        return AddressType(**d)
 
-    os.execvp('uwsgi', ('uwsgi',))
+
+Address = AddressParamType()
+
+
+@click.group()
+def run():
+    "Run stuff."
+
+
+@run.command()
+@click.option("--dev", default=False, is_flag=True)
+@click.option("--bind", default="127.0.0.1:8000", type=Address)
+@click.option("--workers", default=1)
+def web(dev, bind, workers):
+    "Start the webserver."
+    from strut.services.http import Service
+
+    Service(dev, bind, workers).start()
+
+
+def _run_worker():
+    from strut.services.worker import Service
+
+    Service().start()
+
+
+@run.command()
+@click.option("-n", default=1)
+def worker(n):
+    if n == 1:
+        _run_worker()
+    else:
+        from multiprocessing import Process
+
+        procs = []
+        for _ in range(n):
+            p = Process(target=_run_worker)
+            p.start()
+            procs.append(p)
+
+        for p in procs:
+            try:
+                p.join()
+            except KeyboardInterrupt:
+                pass
+
+
+@run.command()
+@click.option("--bind", default="127.0.0.1:8001", type=Address)
+def push(bind):
+    from strut.services.push import Service
+
+    Service(bind).start()

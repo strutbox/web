@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth import logout
 from django.http import HttpResponseRedirect
 from django.template.response import TemplateResponse
@@ -66,10 +67,13 @@ class Dashboard(View):
         ).order_by("-date_created")
 
         context = {
-            "user": UserSchema().dump(request.user),
-            "memberships": OrganizationMemberSchema(many=True).dump(memberships),
-            "playlists": PlaylistSubscriptionSchema(many=True).dump(playlists),
-            "songs": SongSchema(many=True).dump(songs),
-            "jobs": SongJobSchema(many=True).dump(jobs),
+            "settings": {"static": settings.STATIC_URL},
+            "initial_data": {
+                "user": UserSchema().dump(request.user),
+                "memberships": OrganizationMemberSchema(many=True).dump(memberships),
+                "playlists": PlaylistSubscriptionSchema(many=True).dump(playlists),
+                "songs": SongSchema(many=True).dump(songs),
+                "jobs": SongJobSchema(many=True).dump(jobs),
+            },
         }
         return TemplateResponse(request, "dashboard.html", context=context)

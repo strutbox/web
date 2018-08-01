@@ -1,3 +1,8 @@
+window.Strut = {
+  settings: JSON.parse(document.getElementById('strut-settings-data').textContent),
+  initialData: JSON.parse(document.getElementById('strut-initial-data').textContent),
+};
+
 const { Strut } = window;
 
 export const media = (src) => { return Strut.settings.static + src };

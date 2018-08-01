@@ -6,20 +6,6 @@
     <link rel="stylesheet" "text/css" href="{% static "fonts/fonts.css" %}">
     <link rel="stylesheet" type="text/css" href="{% static "app.css" %}">
     <link rel="icon" href="{% static "favicon.png" %}" type="image/x-icon" />
-    <script>
-      window.Strut = {
-        settings: {
-          static: '{{ STATIC_URL }}',
-        },
-        initialData: {
-          user: {{ user|serialize }},
-          memberships: {{ memberships|serialize }},
-          songs: {{ songs|serialize }},
-          jobs: {{ jobs|serialize }},
-          playlists: {{ playlists|serialize }},
-        }
-      };
-    </script>
     <title>STRUT</title>
   </head>
   <body>
@@ -46,6 +32,8 @@
       The best part of waking up is <strong>STRUT<sup>™</sup></strong>, <strong>STRUT<sup>™</sup></strong>, <strong>STRUT<sup>™</sup></strong>, <strong>STRUT<sup>™</sup></strong>, <strong>STRUT<sup>™</sup></strong>.
   </div>
 
+  {{ settings|json_script:"strut-settings-data" }}
+  {{ initial_data|json_script:"strut-initial-data" }}
   <script src="{% static "vendor/preact/8.2.9/preact.min.js" %}"></script>
   <script src="{% static "app.js" %}" type="module"></script>
   </body>

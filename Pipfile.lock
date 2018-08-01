@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "f1111ac7f1b3e7a2e8252ef835a0e3fe83dc85948fd9ce8b0555d2213e24c44e"
+            "sha256": "abb0276b82b266ac0bd1cc0b6d1397a31c9f289148239dac69ef51ee6998f355"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -208,10 +208,11 @@
         },
         "django": {
             "hashes": [
-                "sha256:486f8c08fd8fcb44c66e5d6d4a845a28831b3f5be1bbd4dcc245938ed55cdff1"
+                "sha256:7f246078d5a546f63c28fc03ce71f4d7a23677ce42109219c24c9ffb28416137",
+                "sha256:ea50d85709708621d956187c6b61d9f9ce155007b496dd914fdb35db8d790aec"
             ],
             "index": "pypi",
-            "version": "==2.1rc1"
+            "version": "==2.1"
         },
         "e1839a8": {
             "editable": true,
@@ -255,10 +256,10 @@
         },
         "googleapis-common-protos": {
             "hashes": [
-                "sha256:93d1a8302eac46158a03133b27bfb0768488e78c5c882d2fb780abae68265d08"
+                "sha256:c075eddaa2628ab519e01b7d75b76e66c40eaa50fc52758d8225f84708950ef2"
             ],
-            "markers": "python_version != '3.0.*' and python_version >= '2.7' and python_version != '3.3.*' and python_version != '3.1.*' and python_version != '3.2.*'",
-            "version": "==1.6.0b4"
+            "markers": "python_version != '3.2.*' and python_version != '3.0.*' and python_version != '3.3.*' and python_version >= '2.7' and python_version != '3.1.*'",
+            "version": "==1.5.3"
         },
         "hiredis": {
             "hashes": [
@@ -290,19 +291,19 @@
         },
         "jsonschema": {
             "hashes": [
-                "sha256:c0a08003ec72d263868839316215fcfc7b0d73311970f08a770e0cec75c57722",
-                "sha256:d1bd4b3002d360729c5e16c21f09d3311745f305f77eca47acb3674e42884a56"
+                "sha256:000e68abd33c972a5248544925a0cae7d1125f9bf6c58280d37546b946769a08",
+                "sha256:6ff5f3180870836cae40f06fa10419f557208175f13ad7bc26caa77beb1f6e02"
             ],
             "index": "pypi",
-            "version": "==3.0.0a1"
+            "version": "==2.6.0"
         },
         "marshmallow": {
             "hashes": [
-                "sha256:29fe07df512746856459addf8531f7902b5e28bead17afc21204590953963906",
-                "sha256:dee61f63579ab69b9bed628709c4e33ad8da80aea2f40c7a64584537aade47ed"
+                "sha256:171f409d48b44786b7df2793cbd7f1a9062f0fe2c14d547da536b5010f671ade",
+                "sha256:c231784b5a5d2b26e50c90f3038004a3552ec27658cde6e0a5a7279d0c5a8e26"
             ],
             "index": "pypi",
-            "version": "==3.0.0b12"
+            "version": "==2.15.3"
         },
         "msgpack": {
             "hashes": [
@@ -428,12 +429,6 @@
                 "sha256:4ee413b357d53fd3fb44704577afac88e72e878716116270d722723d65b42176"
             ],
             "version": "==1.6.4"
-        },
-        "pyrsistent": {
-            "hashes": [
-                "sha256:4024f838472cba9ea1ccbc638e0bcafec2efda28594a9905177ec365f1a95fea"
-            ],
-            "version": "==0.14.4"
         },
         "python-rapidjson": {
             "hashes": [

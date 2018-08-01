@@ -5,7 +5,7 @@ name = "pypi"
 
 [packages]
 "e1839a8" = {path = ".", editable = true}
-Django = "==2.1rc1"
+Django = ">=2.1,<2.2"
 channels = "*"
 click = "*"
 cryptography = "*"
@@ -35,6 +35,3 @@ ipython = "*"
 
 [requires]
 python_version = "3.7"
-
-[pipenv]
-allow_prereleases = true

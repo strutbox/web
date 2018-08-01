@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "abb0276b82b266ac0bd1cc0b6d1397a31c9f289148239dac69ef51ee6998f355"
+            "sha256": "9c2fd68ab13fadc4720f59e2c93a12562f21f30f5480c4a7a09d7bb8d6206100"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -256,10 +256,10 @@
         },
         "googleapis-common-protos": {
             "hashes": [
-                "sha256:c075eddaa2628ab519e01b7d75b76e66c40eaa50fc52758d8225f84708950ef2"
+                "sha256:93d1a8302eac46158a03133b27bfb0768488e78c5c882d2fb780abae68265d08"
             ],
-            "markers": "python_version != '3.2.*' and python_version != '3.0.*' and python_version != '3.3.*' and python_version >= '2.7' and python_version != '3.1.*'",
-            "version": "==1.5.3"
+            "markers": "python_version != '3.0.*' and python_version >= '2.7' and python_version != '3.3.*' and python_version != '3.1.*' and python_version != '3.2.*'",
+            "version": "==1.6.0b4"
         },
         "hiredis": {
             "hashes": [

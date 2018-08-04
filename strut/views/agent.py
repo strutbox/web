@@ -105,6 +105,7 @@ class Bootstrap(AgentView):
                     # "association": association,
                 },
                 "websocket": f"{settings.WEBSOCKET_HOST}/{TimestampSigner().sign(device.serial)}",
+                "download_url": f"https://{settings.GOOGLE_STORAGE_BUCKET}.storage.googleapis.com/files/",
             },
         )
 

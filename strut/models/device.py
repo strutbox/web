@@ -1,11 +1,12 @@
 import enum
-import zlib
+from base64 import urlsafe_b64decode
 from time import time
 from uuid import uuid1
 
 import msgpack
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
+from cryptography.fernet import Fernet
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes, serialization
 from cryptography.hazmat.primitives.asymmetric import padding
@@ -48,19 +49,21 @@ class Device(Model):
         )
 
     def encrypt_bytes(self, data):
+        key = Fernet.generate_key()
+
         return self.public_key().encrypt(
-            data,
+            urlsafe_b64decode(key),
             padding.OAEP(
                 mgf=padding.MGF1(algorithm=hashes.SHA1()),
                 algorithm=hashes.SHA1(),
                 label=None,
             ),
-        )
+        ) + urlsafe_b64decode(Fernet(key).encrypt(data))
 
     def build_message(self, data):
         data["id"] = uuid1().bytes
         data["time"] = int(time() * 1000)
-        return self.encrypt_bytes(zlib.compress(msgpack.packb(data)))
+        return self.encrypt_bytes(msgpack.packb(data))
 
     def send_message(self, message):
         async_to_sync(channel_layer.group_send)(

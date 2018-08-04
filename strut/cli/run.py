@@ -89,7 +89,7 @@ def worker(n):
 
 
 @run.command()
-@click.option("--bind", default="127.0.0.1:8001", type=Address)
+@click.option("--bind", default="0.0.0.0:8001", type=Address)
 def push(bind):
     from strut.services.push import Service
 

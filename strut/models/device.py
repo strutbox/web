@@ -24,6 +24,7 @@ class Device(Model):
     name = models.TextField()
     serial = models.CharField(max_length=16)
     pubkey = models.BinaryField()
+    settings = JSONField(null=True)
     date_added = models.DateTimeField(auto_now_add=True)
 
     class Meta:

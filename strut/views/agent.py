@@ -102,6 +102,7 @@ class Bootstrap(AgentView):
                 "device": {
                     # "serial": device.serial,
                     "name": device.name,
+                    "settings": device.settings or {},
                     # "association": association,
                 },
                 "websocket": f"{settings.WEBSOCKET_HOST}/{TimestampSigner().sign(device.serial)}",

@@ -77,3 +77,8 @@ class Dashboard(View):
             },
         }
         return TemplateResponse(request, "dashboard.html", context=context)
+
+
+class DeviceSetup(View):
+    def get(self, request):
+        return TemplateResponse(request, "setup.html")

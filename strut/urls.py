@@ -23,6 +23,7 @@ hooks_urls = [path("^lockitron/$", hooks.Lockitron.as_view())]
 urlpatterns = [
     path("^$", ui.Index.as_view(), name="index"),
     path("^dashboard/$", ui.Dashboard.as_view(), name="dashboard"),
+    path("^device-setup/$", ui.DeviceSetup.as_view(), name="device-setup"),
     path("^login/$", ui.Login.as_view(), name="login"),
     path("^logout/$", ui.Logout.as_view(), name="logout"),
     path(

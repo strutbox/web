@@ -1,6 +1,10 @@
 import jsonschema
 import rapidjson as json
+from django.conf import settings
+from django.core.mail import send_mail
 from django.http import HttpResponse
+from django.template import Context
+from django.template.loader import get_template
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
@@ -95,6 +99,9 @@ class Lockitron(HooksView):
             lockitron_lock.name = lock["name"]
             lockitron_lock.save(update_fields=["name"])
 
+        if activity["kind"] != "lock-updated-unlocked":
+            return HttpResponse(status=403)
+
         user, created = LockitronUser.objects.update_or_create(
             user_id=user["id"],
             defaults={
@@ -105,11 +112,17 @@ class Lockitron(HooksView):
         )
 
         if created:
-            # TODO: send invite
-            pass
-
-        if activity["kind"] != "lock-updated-unlocked":
-            return HttpResponse(status=403)
+            send_mail(
+                "🎉 Welcome to STRUT!",
+                get_template("welcome.txt").render(
+                    {
+                        "organization": lockitron_lock.organization,
+                        "url": request.build_absolute_uri("/"),
+                    }
+                ),
+                settings.DEFAULT_FROM_EMAIL,
+                [email],
+            )
 
         try:
             user = User.objects.get(

@@ -80,7 +80,7 @@ class YouTubeResolver:
                 # print(fmt)
                 if fmt["format_id"] not in AUDIO_ITAGS:
                     continue
-                fmt["_weight"] = fmt["abr"] + RANKING[fmt["acodec"]] / 10
+                fmt["_weight"] = fmt["abr"] + RANKING.get(fmt["acodec"], 1) / 10
                 formats.append(fmt)
         except KeyError:
             pass

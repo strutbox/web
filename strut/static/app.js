@@ -51,9 +51,14 @@ class Playlist extends Component {
 
   componentWillMount() {
     this.reload();
+    this.timer = setInterval(this.reload.bind(this), 5000);
     document.body.addEventListener('playlist-update', (e) => {
       this.reload();
     }, false);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer);
   }
 
   reload() {

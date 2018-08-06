@@ -12,6 +12,11 @@ RUN apk add --no-cache 'su-exec>=0.2'
 RUN mkdir -p /usr/src/strut
 WORKDIR /usr/src/strut
 
+RUN set -ex; \
+    \
+    apk add --no-cache \
+        ffmpeg
+
 COPY . /usr/src/strut
 
 RUN set -ex; \

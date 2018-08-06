@@ -2,9 +2,10 @@ Today is your lucky day!
 
 Your employer, {{ organization.name }}, has graciously decided to offer you the ability to come into work with your very own entrance music.
 
-STRUT allows you to know what it feels like that rockstar you've always wished you could be.
+STRUT™ allows you to know what it feels like to be that rockstar you've always wished you could be.
 
 Head over to {{ url }} now to find out more and to configure your own playlist.
 
 <3
-The STRUT Team
+The STRUT™ Team
+The best part of waking up is STRUT™, STRUT™, STRUT™, STRUT™, STRUT™.

@@ -113,7 +113,7 @@ class Lockitron(HooksView):
 
         if created:
             send_mail(
-                "🎉 Welcome to STRUT!",
+                "🎉 Welcome to STRUT™!",
                 get_template("welcome.txt").render(
                     {
                         "organization": lockitron_lock.organization,

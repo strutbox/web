@@ -47,28 +47,56 @@ body, html {
   font-size: .5em;
 }
 
+.pull-right {
+  float: right;
+}
+
+.User-nav button {
+  transform: rotate(-6deg) skewX(5deg);
+  font-size: 22px;
+}
+
+.btn {
+  cursor: pointer;
+  font-family: Blackout;
+  border: 0;
+  border-radius: 0;
+  background: #fff;
+  font-size: 18px;
+  color: #000;
+  padding: 12px 24px;
+  transform: rotate(-4deg) skewX(5deg);
+}
+
+.btn:hover {
+  animation: Input-focus 1 .5s ease forwards;
+}
+
 
 @keyframes App-logo-spin {
   0% { transform: rotate(0deg) scale(.5); }
   50% { transform: rotate(-10deg) scale(1.5); }
   100% { transform: rotate(0deg) scale(.5); }
 }
+
+@keyframes Input-focus {
+  from { transform: rotate(2.2deg) skewX(3deg) scale(1); }
+  to { transform: rotate(-5.2deg) skewX(23deg) scale(1.4); }
+}
     </style>
   </head>
   <body>
-    {% if request.user.is_authenticated %}
-    <form method="post" action="{% url "logout" %}">
-        {% csrf_token %}
-        <button>Logout</button>
-    </form>
-    {% else %}
-    <a href="{% url "login" %}">Login</a>
-    {% endif %}
     <div class="App-wrapper">
       <div class="App">
         <div class="App-header">
           <img class="App-logo" src="{% static "logo-white.svg" %}" />
-          <div class="pull-right"></div>
+          <div class="pull-right">
+            <div class="User-nav">
+              <form method="get" action="{% url "login" %}">
+                <button class="btn">Login / Register</button>
+              </form>
+            </div>
+          </div>
         </div>
       </div>
     </div>

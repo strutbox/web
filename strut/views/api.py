@@ -3,8 +3,8 @@ from django.http import JsonResponse
 from django.utils.decorators import method_decorator
 from django.views.generic import View
 
-from strut.models import Playlist, PlaylistSong, Song, SongMeta, SongJob
-from strut.schemas.music import SongMetaSchema, SongSchema, SongJobSchema
+from strut.models import Playlist, PlaylistSong, Song, SongJob, SongMeta
+from strut.schemas.music import SongJobSchema, SongMetaSchema, SongSchema
 
 
 @method_decorator(login_required, name="dispatch")

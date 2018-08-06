@@ -5,8 +5,8 @@ from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.views.generic import View
 
-from strut.models import OrganizationMember, PlaylistSubscription, SongJob
-from strut.schemas.music import PlaylistSubscriptionSchema, SongJobSchema
+from strut.models import OrganizationMember, PlaylistSubscription
+from strut.schemas.music import PlaylistSubscriptionSchema
 from strut.schemas.organization import OrganizationMemberSchema
 from strut.schemas.user import UserSchema
 
@@ -33,7 +33,11 @@ class Index(View):
     def get(self, request):
         if request.user.is_authenticated:
             return HttpResponseRedirect(reverse("dashboard"))
-        return TemplateResponse(request, "index.html")
+
+        context = {}
+        if request.GET.get("error") == "forbidden":
+            context["error"] = "You're not allowed to sign up. Try a different email."
+        return TemplateResponse(request, "index.html", context=context)
 
 
 class Dashboard(View):

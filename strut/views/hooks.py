@@ -126,7 +126,7 @@ class Lockitron(HooksView):
         except Song.DoesNotExist:
             return HttpResponse()
 
-        message = {"type": "play", "data": song.file.get_public_url()}
+        message = {"type": "play", "data": song.file.hexdigest()}
         for device in Device.objects.filter(
             deviceassociation__organization_id=lockitron_lock.organization_id
         ).iterator():

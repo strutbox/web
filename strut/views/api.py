@@ -3,8 +3,8 @@ from django.http import JsonResponse
 from django.utils.decorators import method_decorator
 from django.views.generic import View
 
-from strut.models import Playlist, PlaylistSong, Song, SongMeta
-from strut.schemas.music import SongMetaSchema, SongSchema
+from strut.models import Playlist, PlaylistSong, Song, SongMeta, SongJob
+from strut.schemas.music import SongMetaSchema, SongSchema, SongJobSchema
 
 
 @method_decorator(login_required, name="dispatch")
@@ -85,3 +85,12 @@ class SongDetailView(ApiView):
         PlaylistSong.objects.filter(playlist=playlist, song_id=song_id).delete()
 
         return self.respond({})
+
+
+class SongJobView(ApiView):
+    def get(self, request):
+        jobs = SongJob.objects.filter(
+            user=request.user,
+            status__in=[SongJob.Status.New, SongJob.Status.InProgress],
+        ).order_by("-date_created")
+        return self.respond({"jobs": SongJobSchema(many=True).dump(jobs)})

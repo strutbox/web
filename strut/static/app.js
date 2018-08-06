@@ -40,6 +40,24 @@ class Song extends Component {
   }
 }
 
+class MiniSong extends Component {
+  render() {
+    const { start, length, meta, file } = this.props;
+
+    return (
+      h('div', {class: 'song'},
+        h('div', {class: 'song-thumb'},
+          h('img', {src: meta.thumbnail}),
+        ),
+        h('div', {class: 'song-desc'},
+          h('h6', {title: meta.title}, chop(meta.title, 35)),
+          h('div', {}, `Starts at ${start}s & plays for ${length}s`),
+        )
+      )
+    );
+  }
+}
+
 class Playlist extends Component {
   constructor() {
     super();
@@ -83,15 +101,72 @@ class Playlist extends Component {
   }
 
   render() {
-    const { id } = this.props;
+    const { id, title } = this.props;
     const { songs } = this.state;
 
     return (
-      h('div', {class: 'song-list'},
-        songs.map((song) => {
-          return h(Song, song);
-        }),
-        h('button', {class: 'btn', onClick: this.onClick.bind(this)}, 'Add Song'),
+      h('div', {},
+        h('h6', {}, title),
+        h('div', {class: 'song-list'},
+          songs.map((song) => {
+            return h(Song, song);
+          }),
+          h('button', {class: 'btn', onClick: this.onClick.bind(this)}, 'Add Song'),
+        )
+      )
+    );
+  }
+}
+
+class Jobs extends Component {
+  constructor() {
+    super();
+    this.state = {
+      jobs: [],
+    };
+  }
+
+  componentWillMount() {
+    this.reload();
+    this.timer = setInterval(this.reload.bind(this), 5000);
+    document.body.addEventListener('playlist-update', (e) => {
+      this.reload();
+    }, false);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer);
+  }
+
+  reload() {
+    api('songjob')
+    .then(response => {
+      if (response.status === 200) {
+        this.setState({
+          jobs: response.jobs,
+        });
+      } else {
+        this.setState({
+          jobs: [],
+        })
+      }
+    });
+  }
+
+  render() {
+    const { id } = this.props;
+    const { jobs } = this.state;
+
+    if (!jobs.length) return;
+
+    return (
+      h('div', {},
+        h('h6', {}, 'Crunching...'),
+        h('div', {class: 'song-list'},
+          jobs.map((j) => {
+            return h(MiniSong, j.song)
+          })
+        )
       )
     );
   }
@@ -337,8 +412,8 @@ class App extends Component {
     return (
       h('div', {class: 'row main'},
         h('div', {class: 'column'},
-          h('h6', {}, 'My Songs'),
-          h(Playlist, {id: 1, onAddSong: this.onAddSong.bind(this)}),
+          h(Jobs, {}),
+          h(Playlist, {id: 1, title: 'My Songs', onAddSong: this.onAddSong.bind(this)}),
         ),
         h('div', {class: 'column'},
           h('div', {class: 'field'},

@@ -24,6 +24,7 @@ v0_urls = [
             ]
         ),
     ),
+    path("^songjob/", include([path("^$", api.SongJobView.as_view())])),
 ]
 
 hooks_urls = [path("^lockitron/$", hooks.Lockitron.as_view())]

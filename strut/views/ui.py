@@ -53,18 +53,12 @@ class Dashboard(View):
             .select_related("playlist")
         )
 
-        jobs = SongJob.objects.filter(
-            user=request.user,
-            status__in=[SongJob.Status.New, SongJob.Status.InProgress],
-        ).order_by("-date_created")
-
         context = {
             "settings": {"static": settings.STATIC_URL},
             "initial_data": {
                 "user": UserSchema().dump(request.user),
                 "memberships": OrganizationMemberSchema(many=True).dump(memberships),
                 "playlists": PlaylistSubscriptionSchema(many=True).dump(playlists),
-                "jobs": SongJobSchema(many=True).dump(jobs),
             },
         }
         return TemplateResponse(request, "dashboard.html", context=context)

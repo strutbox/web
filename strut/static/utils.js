@@ -21,7 +21,7 @@ const getCookie = (name) => {
   return null;
 };
 
-export const api = (endpoint, options) => {
+export const api = (endpoint, options = {}) => {
   const { query } = options;
   delete options.query;
 

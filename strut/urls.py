@@ -15,7 +15,15 @@ v0_urls = [
         ),
     ),
     path("^songmeta/", include([path("^$", api.SongMetaView.as_view())])),
-    path("^song/", include([path("^$", api.SongView.as_view())])),
+    path(
+        "^song/",
+        include(
+            [
+                path("^$", api.SongView.as_view()),
+                path("^(?P<song_id>\d+)/$", api.SongDetailView.as_view()),
+            ]
+        ),
+    ),
 ]
 
 hooks_urls = [path("^lockitron/$", hooks.Lockitron.as_view())]

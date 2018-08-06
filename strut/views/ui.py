@@ -5,8 +5,8 @@ from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.views.generic import View
 
-from strut.models import OrganizationMember, PlaylistSubscription, Song, SongJob
-from strut.schemas.music import PlaylistSubscriptionSchema, SongJobSchema, SongSchema
+from strut.models import OrganizationMember, PlaylistSubscription, SongJob
+from strut.schemas.music import PlaylistSubscriptionSchema, SongJobSchema
 from strut.schemas.organization import OrganizationMemberSchema
 from strut.schemas.user import UserSchema
 
@@ -53,14 +53,6 @@ class Dashboard(View):
             .select_related("playlist")
         )
 
-        songs = (
-            Song.objects.filter(
-                playlistsong__playlist__owner=request.user, file__isnull=False
-            )
-            .select_related("meta", "file")
-            .order_by("-id")
-        )
-
         jobs = SongJob.objects.filter(
             user=request.user,
             status__in=[SongJob.Status.New, SongJob.Status.InProgress],
@@ -72,7 +64,6 @@ class Dashboard(View):
                 "user": UserSchema().dump(request.user),
                 "memberships": OrganizationMemberSchema(many=True).dump(memberships),
                 "playlists": PlaylistSubscriptionSchema(many=True).dump(playlists),
-                "songs": SongSchema(many=True).dump(songs),
                 "jobs": SongJobSchema(many=True).dump(jobs),
             },
         }

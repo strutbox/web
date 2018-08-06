@@ -7,8 +7,14 @@ const { Component, h, render } = preact;
 class Song extends Component {
   onDelete(e) {
     e.preventDefault();
+    if (!confirm('Are you sure you want to delete this song?')) return;
     const { id } = this.props;
-    alert(`Deleting: ${id}`);
+    api(`song/${id}`, {
+      method: 'DELETE',
+    })
+    .then(response => {
+      document.body.dispatchEvent(new Event('playlist-update'));
+    });
   }
 
   render() {
@@ -35,13 +41,45 @@ class Song extends Component {
 }
 
 class Playlist extends Component {
+  constructor() {
+    super();
+    this.state = {
+      isLoading: true,
+      songs: [],
+    };
+  }
+
+  componentWillMount() {
+    this.reload();
+    document.body.addEventListener('playlist-update', (e) => {
+      this.reload();
+    }, false);
+  }
+
+  reload() {
+    api('song')
+    .then(response => {
+      if (response.status === 200) {
+        this.setState({
+          isLoading: false,
+          songs: response.songs,
+        });
+      } else {
+        this.setState({
+          isLoading: false,
+        })
+      }
+    });
+  }
+
   onClick(e) {
     e.preventDefault();
     this.props.onAddSong();
   }
 
   render() {
-    const { id, songs } = this.props;
+    const { id } = this.props;
+    const { songs } = this.state;
 
     return (
       h('div', {class: 'song-list'},
@@ -285,16 +323,17 @@ class App extends Component {
 
   onAddSongFinish() {
     this.setState({ addingSong: false });
+    document.body.dispatchEvent(new Event('playlist-update'));
   }
 
   render() {
-    const { user, songs, memberships, addingSong } = this.state;
+    const { user, memberships, addingSong } = this.state;
 
     return (
       h('div', {class: 'row main'},
         h('div', {class: 'column'},
           h('h6', {}, 'My Songs'),
-          h(Playlist, {id: 1, songs: songs, onAddSong: this.onAddSong.bind(this)}),
+          h(Playlist, {id: 1, onAddSong: this.onAddSong.bind(this)}),
         ),
         h('div', {class: 'column'},
           h('div', {class: 'field'},

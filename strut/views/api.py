@@ -13,9 +13,9 @@ class ApiView(View):
         context["status"] = status
         return JsonResponse(context, status=status)
 
-    def dispatch(self, request):
+    def dispatch(self, request, *args, **kwargs):
         try:
-            return super().dispatch(request)
+            return super().dispatch(request, *args, **kwargs)
         except Exception as e:
             return self.respond({"error": str(e)}, status=500)
 
@@ -36,6 +36,17 @@ class SongMetaView(ApiView):
 
 
 class SongView(ApiView):
+    def get(self, request):
+        songs = (
+            Song.objects.filter(
+                playlistsong__playlist__owner=request.user, file__isnull=False
+            )
+            .distinct()
+            .select_related("meta", "file")
+            .order_by("-id")
+        )
+        return self.respond({"songs": SongSchema(many=True).dump(songs)})
+
     def post(self, request):
         source = int(request.POST["source"])
         identifier = request.POST["identifier"]
@@ -50,7 +61,7 @@ class SongView(ApiView):
         song = Song.objects.get_or_create(meta=meta, start=start, length=length)[0]
         song.meta = meta
 
-        playlist = Playlist.objects.get(owner=request.user)
+        playlist, _ = Playlist.objects.get_or_create(owner=request.user)
         PlaylistSong.objects.create(playlist=playlist, song=song)
 
         if not song.is_active:
@@ -62,5 +73,15 @@ class SongView(ApiView):
         #     'song': SongSchema().dump(song).data,
         #     'job': SongJobSchema().dump(job).data,
         # }
+
+        return self.respond({})
+
+
+class SongDetailView(ApiView):
+    def delete(self, request, song_id):
+        song_id = int(song_id)
+
+        playlist, _ = Playlist.objects.get_or_create(owner=request.user)
+        PlaylistSong.objects.filter(playlist=playlist, song_id=song_id).delete()
 
         return self.respond({})

@@ -3,3 +3,11 @@ layout_pipenv
 export STRUT_DEBUG=1
 export STRUT_SECRET_KEY=test
 export STRUT_DATABASE_URL=postgres://postgres@127.0.0.1:5432/strut
+
+export GOOGLE_CLOUD_PROJECT=your-project
+export STRUT_GOOGLE_STORAGE_BUCKET=strutbox
+
+export STRUT_DATABASE_URL=postgres://postgres@127.0.0.1:5433/strut
+export STRUT_GOOGLE_OAUTH2_CLIENT_ID=xxx.apps.googleusercontent.com
+export STRUT_GOOGLE_OAUTH2_CLIENT_SECRET=xxx
+export STRUT_WEBSOCKET_HOST=ws://127.0.0.1:8001

@@ -1,14 +1,21 @@
+import string
+from secrets import choice
+
+alphabet = string.ascii_letters + string.digits
+
+
+def get_name(len=8):
+    return "".join(choice(alphabet) for i in range(len))
+
+
 class Service:
     def start(self):
         import strut
 
         strut.setup()
 
-        from time import sleep
-        from redis.exceptions import ConnectionError
         from rq import Connection, Queue, Worker
 
         queues = ["default"]
-        config = {"default_result_ttl": 0}
         with Connection():
-            Worker(map(Queue, queues), **config).work()
+            Worker(map(Queue, queues), default_result_ttl=0, name=get_name()).work()

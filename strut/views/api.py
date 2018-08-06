@@ -3,7 +3,14 @@ from django.http import JsonResponse
 from django.utils.decorators import method_decorator
 from django.views.generic import View
 
-from strut.models import Playlist, PlaylistSong, Song, SongJob, SongMeta
+from strut.models import (
+    Playlist,
+    PlaylistSong,
+    PlaylistSubscription,
+    Song,
+    SongJob,
+    SongMeta,
+)
 from strut.schemas.music import SongJobSchema, SongMetaSchema, SongSchema
 
 
@@ -61,7 +68,9 @@ class SongView(ApiView):
         song = Song.objects.get_or_create(meta=meta, start=start, length=length)[0]
         song.meta = meta
 
-        playlist, _ = Playlist.objects.get_or_create(owner=request.user)
+        playlist, created = Playlist.objects.get_or_create(owner=request.user)
+        if created:
+            PlaylistSubscription.objects.create(user=request.user, playlist=playlist)
         PlaylistSong.objects.create(playlist=playlist, song=song)
 
         if not song.is_active:
@@ -81,7 +90,9 @@ class SongDetailView(ApiView):
     def delete(self, request, song_id):
         song_id = int(song_id)
 
-        playlist, _ = Playlist.objects.get_or_create(owner=request.user)
+        playlist, created = Playlist.objects.get_or_create(owner=request.user)
+        if created:
+            PlaylistSubscription.objects.create(user=request.user, playlist=playlist)
         PlaylistSong.objects.filter(playlist=playlist, song_id=song_id).delete()
 
         return self.respond({})

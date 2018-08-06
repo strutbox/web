@@ -2,6 +2,7 @@ import asyncio
 
 from asgiref.sync import async_to_sync
 from channels.db import database_sync_to_async
+from channels.generic.http import AsyncHttpConsumer
 from channels.generic.websocket import AsyncWebsocketConsumer
 from django.core.signing import BadSignature, TimestampSigner
 
@@ -54,9 +55,14 @@ class DeviceConsumer(AsyncWebsocketConsumer):
             await self.send(bytes_data=event["bytes"])
 
 
-class NullConsumer(AsyncWebsocketConsumer):
+class NullSocketConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         await self.close(code=404)
+
+
+class NullHttpConsumer(AsyncHttpConsumer):
+    async def handle(self, body):
+        await self.send_response(204, b"", headers=[])
 
 
 @database_sync_to_async

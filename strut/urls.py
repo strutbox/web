@@ -32,7 +32,20 @@ hooks_urls = [path("^lockitron/$", hooks.Lockitron.as_view())]
 urlpatterns = [
     path("^$", ui.Index.as_view(), name="index"),
     path("^dashboard/$", ui.Dashboard.as_view(), name="dashboard"),
-    path("^device-setup/$", ui.DeviceSetup.as_view(), name="device-setup"),
+    path(
+        "^users/", include([path("^(?P<email>[^\/]+)/$", ui.UserDetailsView.as_view())])
+    ),
+    path(
+        "^organization/",
+        include(
+            [
+                path(
+                    "^(?P<organization_slug>[a-z-]+)/members/$",
+                    ui.OrganizationMembersView.as_view(),
+                )
+            ]
+        ),
+    ),
     path("^login/$", ui.Login.as_view(), name="login"),
     path("^logout/$", ui.Logout.as_view(), name="logout"),
     path(
@@ -43,5 +56,6 @@ urlpatterns = [
         "^%s" % settings.STATIC_URL.lstrip("/"),
         include([path("^(?P<path>.*)$", static.Static.as_view())]),
     ),
+    path("^device-setup/$", ui.DeviceSetup.as_view(), name="device-setup"),
     path("", include("social_django.urls", namespace="social")),
 ]

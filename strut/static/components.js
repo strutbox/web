@@ -17,12 +17,14 @@ export class Song extends Component {
   }
 
   render() {
-    const { start, length, meta, file } = this.props;
+    const { start, length, meta, file, editable } = this.props;
 
     return (
       h('div', {class: 'song'},
-        h('a', {onClick: this.onDelete.bind(this), href: '#', class: 'delete'},
-          h('img', {src: media('trash.svg')}),
+        (editable &&
+          h('a', {onClick: this.onDelete.bind(this), href: '#', class: 'delete'},
+            h('img', {src: media('trash.svg')}),
+          )
         ),
         h('div', {class: 'song-thumb'},
           h('img', {src: meta.thumbnail}),
@@ -67,7 +69,10 @@ export class Playlist extends Component {
   }
 
   componentWillMount() {
+    const { owner } = this.props;
     this.reload();
+    if (!owner) return;
+
     this.timer = setInterval(this.reload.bind(this), 5000);
     document.body.addEventListener('playlist-update', (e) => {
       this.reload();
@@ -75,10 +80,20 @@ export class Playlist extends Component {
   }
 
   componentWillUnmount() {
-    clearInterval(this.timer);
+    if (this.timer) clearInterval(this.timer);
   }
 
   reload() {
+    const { songs, owner } = this.props;
+
+    if (!owner) {
+      this.setState({
+        isLoading: false,
+        songs: songs,
+      });
+      return;
+    }
+
     api('song')
     .then(response => {
       if (response.status === 200) {
@@ -100,17 +115,19 @@ export class Playlist extends Component {
   }
 
   render() {
-    const { id, title } = this.props;
+    const { title, owner } = this.props;
     const { songs } = this.state;
 
     return (
       h('div', {},
         h('h6', {}, title),
         h('div', {class: 'song-list'},
-          songs.map((song) => {
-            return h(Song, song);
+          (songs || []).map((song) => {
+            return h(Song, {...song, ...{editable: !!owner}});
           }),
-          h('button', {class: 'btn', onClick: this.onClick.bind(this)}, 'Add Song'),
+          (owner &&
+            h('button', {class: 'btn', onClick: this.onClick.bind(this)}, 'Add Song')
+          ),
         )
       )
     );
@@ -125,5 +142,41 @@ export class TextInput extends Component {
       'type': 'text',
       ...this.props
     });
+  }
+}
+
+export class UserSidebar extends Component {
+  render() {
+    const { user, memberships, me } = this.props;
+
+    return (
+      h('div', {class: 'column'},
+        h('div', {class: 'field'},
+          h('label', {}, 'Email'),
+          h(TextInput, {
+            readonly: true,
+            value: user.email,
+          })
+        ),
+        (me ?
+          h('div', {class: 'field'},
+            h('label', {}, 'Memberships'),
+            h('ul', {},
+              memberships.map((m) => {
+                return h('li', {}, (
+                  h('a', {'href': `/organization/${m.organization.slug}/members/`}, m.organization.name)
+                ));
+              })
+            )
+          )
+          :
+          h('div', {class: 'field'},
+            h('form', {method: 'get', action: '/dashboard/'},
+              h('button', {class: 'btn', }, 'Back to dashboard')
+            )
+          )
+        )
+      )
+    )
   }
 }

@@ -1,12 +1,12 @@
 from django.conf import settings
 from django.contrib.auth import logout
-from django.http import HttpResponseRedirect
+from django.http import Http404, HttpResponseRedirect
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.views.generic import View
 
-from strut.models import OrganizationMember, PlaylistSubscription
-from strut.schemas.music import PlaylistSubscriptionSchema
+from strut.models import OrganizationMember, PlaylistSubscription, Song, User
+from strut.schemas.music import PlaylistSubscriptionSchema, SongSchema
 from strut.schemas.organization import OrganizationMemberSchema
 from strut.schemas.user import UserSchema
 
@@ -40,11 +40,34 @@ class Index(View):
         return TemplateResponse(request, "index.html", context=context)
 
 
-class Dashboard(View):
-    def get(self, request):
+class AppView(View):
+    script = None
+
+    def has_permission(self, request):
+        return True
+
+    def get(self, request, **kwargs):
         if not request.user.is_authenticated:
             return HttpResponseRedirect(reverse("index"))
 
+        if not self.has_permission(request):
+            raise Http404
+
+        context = {
+            "script": self.script,
+            "settings": {"static": settings.STATIC_URL},
+            "initial_data": self.get_initial_data(request),
+        }
+        return TemplateResponse(request, "app.html", context=context)
+
+    def get_initial_data(self, request):
+        return {"me": UserSchema().dump(request.user)}
+
+
+class Dashboard(AppView):
+    script = "dashboard.js"
+
+    def get_initial_data(self, request):
         memberships = (
             OrganizationMember.objects.filter(user=request.user, is_active=True)
             .select_related("organization")
@@ -57,16 +80,65 @@ class Dashboard(View):
             .select_related("playlist")
         )
 
-        context = {
-            "script": "dashboard.js",
-            "settings": {"static": settings.STATIC_URL},
-            "initial_data": {
-                "user": UserSchema().dump(request.user),
+        return {
+            **super().get_initial_data(request),
+            **{
                 "memberships": OrganizationMemberSchema(many=True).dump(memberships),
                 "playlists": PlaylistSubscriptionSchema(many=True).dump(playlists),
             },
         }
-        return TemplateResponse(request, "app.html", context=context)
+
+
+class OrganizationMembersView(AppView):
+    script = "organizationMembers.js"
+
+    def has_permission(self, request):
+        return OrganizationMember.objects.filter(
+            user=request.user, organization__slug=self.kwargs["organization_slug"]
+        ).exists()
+
+    def get_initial_data(self, request):
+        users = (
+            User.objects.filter(
+                organizationmember__organization__slug=self.kwargs["organization_slug"],
+                organizationmember__is_active=True,
+            )
+            .exclude(id=request.user.id)
+            .order_by("-id")
+        )
+        return {
+            **super().get_initial_data(request),
+            **{"members": UserSchema(many=True).dump(users)},
+        }
+
+
+class UserDetailsView(AppView):
+    script = "userDetails.js"
+
+    def has_permission(self, request):
+        return User.objects.filter(
+            email=self.kwargs["email"],
+            organizationmember__organization__in=OrganizationMember.objects.filter(
+                user=request.user, is_active=True
+            ).values_list("organization_id"),
+            organizationmember__is_active=True,
+        ).exists()
+
+    def get_initial_data(self, request):
+        user = User.objects.get(email=self.kwargs["email"])
+        songs = (
+            Song.objects.filter(playlistsong__playlist__owner=user, file__isnull=False)
+            .distinct()
+            .select_related("meta", "file")
+            .order_by("-id")
+        )
+        return {
+            **super().get_initial_data(request),
+            **{
+                "user": UserSchema().dump(user),
+                "songs": SongSchema(many=True).dump(songs),
+            },
+        }
 
 
 class DeviceSetup(View):

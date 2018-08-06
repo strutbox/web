@@ -1,7 +1,7 @@
-import { media, api, getYoutubeID, chop } from './utils.js';
-import {Song, MiniSong, Playlist, TextInput } from './components.js';
+import { Strut, media, api, getYoutubeID, chop } from './utils.js';
+import { Song, MiniSong, Playlist, TextInput, UserSidebar } from './components.js';
 
-const { preact, Strut } = window;
+const { preact } = window;
 const { Component, h, render } = preact;
 
 
@@ -266,7 +266,7 @@ class AddSongModal extends Component {
 class Dashboard extends Component {
   componentWillMount() {
     this.setState({
-      user: this.props.user,
+      me: this.props.me,
       songs: this.props.songs,
       memberships: this.props.memberships,
       addingSong: false,
@@ -283,31 +283,15 @@ class Dashboard extends Component {
   }
 
   render() {
-    const { user, memberships, addingSong } = this.state;
+    const { me, memberships, addingSong } = this.state;
 
     return (
       h('div', {class: 'row main'},
         h('div', {class: 'column'},
           h(Jobs, {}),
-          h(Playlist, {id: 1, title: 'My Songs', onAddSong: this.onAddSong.bind(this)}),
+          h(Playlist, {title: 'My Songs', owner: true, onAddSong: this.onAddSong.bind(this)}),
         ),
-        h('div', {class: 'column'},
-          h('div', {class: 'field'},
-            h('label', {}, 'Email'),
-            h(TextInput, {
-              readonly: true,
-              value: user.email
-            })
-          ),
-          h('div', {class: 'field'},
-            h('label', {}, 'Memberships'),
-            h('ul', {},
-              memberships.map((m) => {
-                return h('li', {}, m.organization.slug);
-              })
-            )
-          )
-        ),
+        h(UserSidebar, {user: me, memberships: memberships, me: true}),
         ( addingSong && h(AddSongModal, {onFinish: this.onAddSongFinish.bind(this)}) ),
       )
     )

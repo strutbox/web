@@ -21,8 +21,8 @@ USER_SCHEMA = {
     "properties": {
         "id": {"type": "string"},
         "email": {"type": "string"},
-        "first_name": {"type": "string"},
-        "last_name": {"type": "string"},
+        "first_name": {"type": ["string", "null"]},
+        "last_name": {"type": ["string", "null"]},
     },
     "required": ["id", "email"],
 }
@@ -96,7 +96,6 @@ class Lockitron(HooksView):
             lockitron_lock.save(update_fields=["name"])
 
         user, created = LockitronUser.objects.update_or_create(
-            lock=lockitron_lock,
             user_id=user["id"],
             defaults={
                 "email": email,

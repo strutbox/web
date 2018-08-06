@@ -71,9 +71,7 @@ def load_fixture(ctx):
     lock = models.LockitronLock.objects.create(
         organization=org, lock_id="lock-abc123", name="Matt Lock"
     )
-    models.LockitronUser.objects.create(
-        lock=lock, user_id="user-abc123", email=user.email
-    )
+    models.LockitronUser.objects.create(user_id="user-abc123", email=user.email)
 
     playlist = models.Playlist.objects.create(owner=user)
     models.PlaylistSubscription.objects.create(user=user, playlist=playlist)

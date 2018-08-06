@@ -15,18 +15,12 @@ class Service:
         self.workers = workers
         self.bind = bind
 
-        # try:
-        #     self.bind = os.environ["STRUT_BIND"]
-        # except KeyError:
-        #     self.bind = bind
-
     def start(self):
         options = {
             "auto-procname": True,
             "die-on-term": True,
             "disable-write-exception": True,
             "enable-threads": True,
-            "http-socket": f"{self.bind.ipv4[0]}:{self.bind.ipv4[1]}",
             "ignore-sigpipe": True,
             "ignore-write-errors": True,
             "lazy-apps": True,
@@ -43,6 +37,13 @@ class Service:
             "vacuum": True,
             "log-format": '%(addr) - %(user) [%(ltime)] "%(method) %(uri) %(proto)" %(status) %(size) "%(referer)" "%(uagent)"',
         }
+
+        if self.bind.ipv4:
+            options["http-socket"] = f"{self.bind.ipv4[0]}:{self.bind.ipv4[1]}"
+        elif self.bind.unix:
+            options["socket"] = self.bind.unix
+        else:
+            raise ValueError("Cannot bind to fd")
 
         if self.dev:
             options.update(dev_options)

@@ -22,10 +22,13 @@ class Service:
         channel_layer = get_channel_layer(DEFAULT_CHANNEL_LAYER)
 
         endpoints = build_endpoint_description_strings(
-            host=self.bind.ipv4[0], port=self.bind.ipv4[1]
+            host=self.bind.ipv4 and self.bind.ipv4[0],
+            port=self.bind.ipv4 and self.bind.ipv4[1],
+            unix_socket=self.bind.unix,
+            file_descriptor=self.bind.fd,
         )
 
-        print(f"> listening on ws://{self.bind.ipv4[0]}:{self.bind.ipv4[1]}...")
+        print(f"> listening on {endpoints[0]}...")
         Server(
             application=application,
             signal_handlers=True,

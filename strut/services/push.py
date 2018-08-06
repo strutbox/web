@@ -40,7 +40,7 @@ class Service:
             action_logger=AccessLogGenerator(sys.stdout),
             ping_interval=20,
             ping_timeout=30,
-            websocket_timeout=-1,  # forever
+            websocket_timeout=7200,
             websocket_handshake_timeout=5,
             verbosity=1,
             proxy_forwarded_address_header="X-Forwarded-For",

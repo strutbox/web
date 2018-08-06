@@ -58,6 +58,7 @@ class Dashboard(View):
         )
 
         context = {
+            "script": "dashboard.js",
             "settings": {"static": settings.STATIC_URL},
             "initial_data": {
                 "user": UserSchema().dump(request.user),
@@ -65,7 +66,7 @@ class Dashboard(View):
                 "playlists": PlaylistSubscriptionSchema(many=True).dump(playlists),
             },
         }
-        return TemplateResponse(request, "dashboard.html", context=context)
+        return TemplateResponse(request, "app.html", context=context)
 
 
 class DeviceSetup(View):

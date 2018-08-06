@@ -42,6 +42,7 @@ class Service:
             options["http-socket"] = f"{self.bind.ipv4[0]}:{self.bind.ipv4[1]}"
         elif self.bind.unix:
             options["socket"] = self.bind.unix
+            options["chmod-socket"] = 777
         else:
             raise ValueError("Cannot bind to fd")
 

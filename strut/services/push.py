@@ -1,6 +1,14 @@
 import sys
 
 
+def build_endpoint_description_string(bind):
+    if bind.ipv4:
+        return f"tcp:port={bind.ipv4[1]}:interface={bind.ipv4[0]}"
+    if bind.unix:
+        return f"unix:{bind.unix}:mode=777"
+    return f"fd:fileno={bind.fd}"
+
+
 class Service:
     def __init__(self, bind):
         self.bind = bind
@@ -16,24 +24,18 @@ class Service:
         from channels.routing import get_default_application
         from daphne.access import AccessLogGenerator
         from daphne.server import Server
-        from daphne.endpoints import build_endpoint_description_strings
 
         application = get_default_application()
         channel_layer = get_channel_layer(DEFAULT_CHANNEL_LAYER)
 
-        endpoints = build_endpoint_description_strings(
-            host=self.bind.ipv4 and self.bind.ipv4[0],
-            port=self.bind.ipv4 and self.bind.ipv4[1],
-            unix_socket=self.bind.unix,
-            file_descriptor=self.bind.fd,
-        )
+        endpoint = build_endpoint_description_string(self.bind)
 
-        print(f"> listening on {endpoints[0]}...")
+        print(f"> listening on {endpoint}...")
         Server(
             application=application,
             signal_handlers=True,
             # channel_layer=channel_layer,
-            endpoints=endpoints,
+            endpoints=[endpoint],
             # ws_protocols=getattr(settings, "CHANNELS_WS_PROTOCOLS", None),
             action_logger=AccessLogGenerator(sys.stdout),
             ping_interval=20,

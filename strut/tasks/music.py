@@ -3,7 +3,7 @@ import subprocess
 from tempfile import mkstemp
 
 from strut.mediaresolvers.youtube import YouTubeResolver
-from strut.models import File, Song, SongJob, SongMeta
+from strut.models import Device, File, Song, SongJob, SongMeta
 
 
 def process_songjob(job_id):

@@ -7,7 +7,6 @@ from strut.models import File, Song, SongJob, SongMeta
 
 
 def process_songjob(job_id):
-    # TODO: Needs to upload to GCS
     try:
         job = SongJob.objects.get(id=job_id, status=SongJob.Status.New)
     except SongJob.DoesNotExist:
@@ -77,5 +76,3 @@ def process_songjob(job_id):
         device.send_message(message)
 
     job.record(status=SongJob.Status.Success)
-
-    # subprocess.check_output(['afplay', output])

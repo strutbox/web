@@ -73,6 +73,9 @@ class SongView(ApiView):
             PlaylistSubscription.objects.create(user=request.user, playlist=playlist)
         PlaylistSong.objects.create(playlist=playlist, song=song)
 
+        if not song.is_active:
+            song.process(user=request.user)
+
         return self.respond({})
 
 

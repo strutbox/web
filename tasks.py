@@ -23,11 +23,6 @@ def psql(ctx):
 
 
 @task
-def rmmigrations(ctx):
-    ctx.run("rm -vf strut/migrations/0*.py")
-
-
-@task
 def migrate(ctx):
     ctx.run("strut migrate --generate")
 
@@ -45,6 +40,19 @@ def lint(ctx):
     # see https://github.com/PyCQA/pycodestyle/pull/735
     # Until new flake8 release
     ctx.run("python -W ignore -m flake8")
+
+
+@task
+def build(ctx):
+    ctx.run("docker build --pull --rm -t strutbox/web .")
+
+
+@task(pre=[build])
+def deploy(ctx):
+    ctx.run("docker save -o /tmp/strutbox.tar strutbox/web")
+    ctx.run("scp -C /tmp/strutbox.tar strut.zone:")
+    ctx.run("ssh strut.zone sudo ./deploy.sh")
+    ctx.run("rm -f /tmp/strutbox.tar")
 
 
 @task

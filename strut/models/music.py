@@ -169,7 +169,7 @@ class SongJob(Model):
 
     @property
     def is_complete(self):
-        return self.status in (Status.Success, Status.Failure)
+        return self.status in (self.Status.Success, self.Status.Failure)
 
     def get_log(self):
         if not self.log:

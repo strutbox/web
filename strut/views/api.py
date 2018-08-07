@@ -73,16 +73,6 @@ class SongView(ApiView):
             PlaylistSubscription.objects.create(user=request.user, playlist=playlist)
         PlaylistSong.objects.create(playlist=playlist, song=song)
 
-        if not song.is_active:
-            job = song.process(user=request.user)
-        else:
-            job = None
-
-        # context = {
-        #     'song': SongSchema().dump(song).data,
-        #     'job': SongJobSchema().dump(job).data,
-        # }
-
         return self.respond({})
 
 

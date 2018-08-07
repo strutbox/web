@@ -32,6 +32,9 @@ channels-redis = "*"
 [dev-packages]
 invoke = "*"
 ipython = "*"
+isort = "*"
+black = "*"
+flake8 = "*"
 
 [requires]
 python_version = "3.7"

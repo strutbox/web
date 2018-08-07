@@ -18,7 +18,6 @@ class Service:
 
         strut.setup()
 
-        from django.conf import settings
         from channels.routing import get_default_application
         from daphne.access import AccessLogGenerator
         from daphne.server import Server

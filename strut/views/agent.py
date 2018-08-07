@@ -15,7 +15,7 @@ from structlog import get_logger
 
 from dataclasses import dataclass
 from strut.http import DeviceResponse
-from strut.models import Device, DeviceActivity, DeviceAssociation, FirmwareVersion
+from strut.models import Device, DeviceActivity, FirmwareVersion
 
 logger = get_logger()
 
@@ -90,21 +90,11 @@ class Bootstrap(AgentView):
         if not created and not compare_digest(key, device.pubkey):
             return JsonResponse({"error": "Public key mismatch!"}, status=400)
 
-        try:
-            association = DeviceAssociation.objects.get(device=device)
-        except DeviceAssociation.DoesNotExist:
-            association = None
-
         return DeviceResponse(
             device,
             {
                 "created": created,
-                "device": {
-                    # "serial": device.serial,
-                    "name": device.name,
-                    "settings": device.settings or {},
-                    # "association": association,
-                },
+                "device": {"name": device.name, "settings": device.settings or {}},
                 "websocket": f"{settings.WEBSOCKET_HOST}/{TimestampSigner().sign(device.serial)}",
                 "download_url": f"https://{settings.GOOGLE_STORAGE_BUCKET}.storage.googleapis.com/files/",
             },

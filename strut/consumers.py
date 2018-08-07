@@ -1,6 +1,5 @@
 import asyncio
 
-from asgiref.sync import async_to_sync
 from channels.db import database_sync_to_async
 from channels.generic.http import AsyncHttpConsumer
 from channels.generic.websocket import AsyncWebsocketConsumer

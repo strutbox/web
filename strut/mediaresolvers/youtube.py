@@ -1,13 +1,6 @@
 import os
-import re
-import shutil
-from http.cookiejar import CookiePolicy
-from tempfile import NamedTemporaryFile, mkstemp
-from time import sleep
-from urllib.parse import parse_qsl
+from tempfile import mkstemp
 
-import rapidjson as json
-import requests
 from django.utils import timezone
 from youtube_dl import YoutubeDL
 from youtube_dl.downloader.http import HttpFD

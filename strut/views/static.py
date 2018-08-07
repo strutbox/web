@@ -3,13 +3,8 @@ import os.path
 import posixpath
 
 from django.contrib.staticfiles import finders
-from django.http import (
-    FileResponse,
-    HttpResponse,
-    HttpResponseNotFound,
-    HttpResponseNotModified,
-)
-from django.utils.http import http_date, parse_http_date_safe
+from django.http import FileResponse, HttpResponseNotFound, HttpResponseNotModified
+from django.utils.http import http_date
 from django.views import View
 
 

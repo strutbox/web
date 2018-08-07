@@ -28,30 +28,13 @@ class YouTube:
     @staticmethod
     def download(id):
         s = requests.Session()
-        # resp = s.get('https://www.youtube.com/watch', params={
-        #     'v': id, 'hl': 'en',
-        # })
-        # resp.raise_for_status()
-        # body = resp.text
-
-        # match = re.match(r'^.+ytplayer\.config\s*=\s*(.+);ytplayer\.load.*</script>.*$', body, re.M|re.S)
-        # assert match is not None
-        # config = json.loads(match.group(1))
 
         resp = s.get(
             "https://www.youtube.com/get_video_info",
-            params={
-                "video_id": id,
-                # 'eurl': f'https://youtube.googleapis.com/v/{id}',
-                "ps": "default",
-                "gl": "US",
-                "hl": "en",
-                # 'sts': config['sts'],
-            },
+            params={"video_id": id, "ps": "default", "gl": "US", "hl": "en"},
         )
         resp.raise_for_status()
         info = parse_qs(resp.text)
-        # info['title']
         formats = []
 
         for k in "url_encoded_fmt_stream_map", "adaptive_fmts":

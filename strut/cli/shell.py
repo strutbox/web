@@ -18,7 +18,8 @@ def shell():
 
     from strut.db.utils import last_query, explain
 
-    py_version = lambda: sys.version.split("\n", 1)[0]
+    def py_version():
+        return sys.version.split("\n", 1)[0]
 
     banner = f"""\
    _____________  __  ________

@@ -58,8 +58,6 @@ class FileManager(models.Manager):
         except self.model.DoesNotExist:
             pass
 
-        from google.cloud.storage.client import Client
-
         blob = get_bucket().blob(f"files/{sha256sum.hexdigest()}")
         blob.md5_hash = base64.b64encode(md5sum.digest()).decode()
         blob.upload_from_file(fp, predefined_acl="publicRead")

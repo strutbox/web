@@ -34,8 +34,17 @@ def migrate(ctx):
 
 @task
 def format(ctx):
-    ctx.run("isort -rc .")
-    ctx.run("black .")
+    ctx.run("python -m isort -rc .")
+    ctx.run("python -m black .")
+    ctx.run("python -W ignore -m flake8")
+
+
+@task
+def lint(ctx):
+    # Need to ignore python warnings -W
+    # see https://github.com/PyCQA/pycodestyle/pull/735
+    # Until new flake8 release
+    ctx.run("python -W ignore -m flake8")
 
 
 @task
@@ -68,7 +77,7 @@ def load_fixture(ctx):
         )
 
     org.associate_device(device)
-    lock = models.LockitronLock.objects.create(
+    models.LockitronLock.objects.create(
         organization=org, lock_id="lock-abc123", name="Matt Lock"
     )
     models.LockitronUser.objects.create(user_id="user-abc123", email=user.email)

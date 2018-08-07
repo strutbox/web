@@ -3,7 +3,6 @@ import rapidjson as json
 from django.conf import settings
 from django.core.mail import send_mail
 from django.http import HttpResponse
-from django.template import Context
 from django.template.loader import get_template
 from django.utils.decorators import method_decorator
 from django.views import View

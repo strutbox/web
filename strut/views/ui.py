@@ -98,14 +98,10 @@ class OrganizationMembersView(AppView):
         ).exists()
 
     def get_initial_data(self, request):
-        users = (
-            User.objects.filter(
-                organizationmember__organization__slug=self.kwargs["organization_slug"],
-                organizationmember__is_active=True,
-            )
-            .exclude(id=request.user.id)
-            .order_by("-id")
-        )
+        users = User.objects.filter(
+            organizationmember__organization__slug=self.kwargs["organization_slug"],
+            organizationmember__is_active=True,
+        ).order_by("-id")
         return {
             **super().get_initial_data(request),
             **{"members": UserSchema(many=True).dump(users)},

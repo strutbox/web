@@ -7,4 +7,5 @@ tasks.py
 requirements-dev.txt
 node_modules/
 pyproject.toml
+setup.cfg
 scratch/

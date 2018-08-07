@@ -69,6 +69,13 @@ def process_songjob(job_id):
             except FileNotFoundError:
                 pass
 
+    message = {"type": "load", "data": file.hexdigest()}
+    for device in Device.objects.filter(
+        deviceassociation__organization__organizationmember__is_active=True,
+        deviceassociation__organization__organizationmember__user__playlist__playlistsong__song__file=file,
+    ):
+        device.send_message(message)
+
     job.record(status=SongJob.Status.Success)
 
     # subprocess.check_output(['afplay', output])

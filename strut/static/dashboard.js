@@ -77,35 +77,64 @@ class AddSongModal extends Component {
   }
 
   setStart(e) {
-    this.setState({
-      start: parseInt(e.target.value, 10),
-    });
+    const value = e.target.value;
+
+    if ( value === '' ) {
+      this.setState({
+        start: undefined,
+      });
+      return;
+    }
+
+    const { length } = this.state;
+    const start = parseInt(value, 10);
+
+    const error = this.validateTimes({ start, length });
+    this.setState({ start, error });
   }
 
   setLength(e) {
-    this.setState({
-      length: parseInt(e.target.value, 10),
-    });
+    const value = e.target.value;
 
-    this.validateTimes();
+    if ( value === '' ) {
+      this.setState({
+        length: undefined,
+      });
+      return;
+    }
+
+    const { start } = this.state;
+    const length = parseInt(value, 10);
+
+    const error = this.validateTimes({ start, length });
+    this.setState({ length, error });
   }
 
-  validateTimes() {
-    const { start, length, songmeta } = this.state;
-    if ( start !== undefined && length !== undefined ) {
+  validateTimes(input, all = false) {
+    const { start, length } = input;
+    const { songmeta } = this.state;
+    if ( all || (start !== undefined && length !== undefined) ) {
+      if ( all ) {
+        if ( start === undefined ) {
+          return 'Start is empty.';
+        }
+        if ( length === undefined ) {
+          return 'Length is empty.';
+        }
+      }
       if ( start + length > songmeta.duration ) {
-        this.setState({ error: `Song is only ${songmeta.duration}s long dummy.` });
-        return;
+        return `Song is only ${songmeta.duration}s long dummy.`;
+      }
+      if ( start < 0 ) {
+        return 'Start must be positive.';
       }
       if ( length < 1 ) {
-        this.setState({ error: 'Not long enough' });
-        return
+        return 'Not long enough';
       }
-      if ( length > 20 ) {
-        this.setState({ error: 'Too long' });
+      if ( length > 30 ) {
+        return 'Too long, must be less than 30s';
       }
     }
-    this.setState({ error: null });
   }
 
   lookupMeta() {
@@ -138,6 +167,12 @@ class AddSongModal extends Component {
   }
 
   createSong() {
+    const error = this.validateTimes(this.state, true);
+    if ( error ) {
+      this.setState({ error });
+      return;
+    }
+
     this.setState({ isLoading: true });
 
     const form = new FormData();

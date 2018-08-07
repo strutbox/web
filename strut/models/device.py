@@ -71,6 +71,12 @@ class Device(Model):
             self.serial, {"type": "device.send", "bytes": self.build_message(message)}
         )
 
+    def play_file(self, file):
+        self.send_message({"type": "play", "data": file.hexdigest()})
+
+    def load_file(self, file):
+        self.send_message({"type": "load", "data": file.hexdigest()})
+
 
 class DeviceAssociation(Model):
     organization = models.ForeignKey("Organization", models.CASCADE)

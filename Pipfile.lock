@@ -21,7 +21,6 @@
                 "sha256:9ffa0f9ea4076e5caedf55f095ea758f5137c7d1cd06cd9916081f4320fdaa4d",
                 "sha256:d3adfc3295a91a97cab472751e26ff85949566a131cebb27a778e49aa0638c1a"
             ],
-            "markers": "python_version >= '3.5.3'",
             "version": "==1.1.0"
         },
         "asgiref": {
@@ -258,7 +257,7 @@
             "hashes": [
                 "sha256:93d1a8302eac46158a03133b27bfb0768488e78c5c882d2fb780abae68265d08"
             ],
-            "markers": "python_version != '3.0.*' and python_version >= '2.7' and python_version != '3.3.*' and python_version != '3.1.*' and python_version != '3.2.*'",
+            "markers": "python_version != '3.3.*' and python_version != '3.2.*' and python_version != '3.0.*' and python_version >= '2.7' and python_version != '3.1.*'",
             "version": "==1.6.0b4"
         },
         "hiredis": {
@@ -299,11 +298,11 @@
         },
         "marshmallow": {
             "hashes": [
-                "sha256:29fe07df512746856459addf8531f7902b5e28bead17afc21204590953963906",
-                "sha256:dee61f63579ab69b9bed628709c4e33ad8da80aea2f40c7a64584537aade47ed"
+                "sha256:77a3bf034dd25e53736eb11a216b2eaa9d132ec4e9a7bbc5f4a10bc52fbbc636",
+                "sha256:b21b56e6fe6ba4c96692ae0dff68698599fa88e2461d5cc6adf099a9349187d4"
             ],
             "index": "pypi",
-            "version": "==3.0.0b12"
+            "version": "==3.0.0b13"
         },
         "msgpack": {
             "hashes": [
@@ -357,6 +356,7 @@
                 "sha256:d7ac50bc06d31deb07ace6de85556c1d7330e5c0958f3b2af85037d6d1182abf",
                 "sha256:dfe6899304b898538f4dc94fa0b281b56b70e40f58afa4c6f807805261cbe2e8"
             ],
+            "markers": "python_version != '3.3.*' and python_version != '3.2.*' and python_version != '3.0.*' and python_version >= '2.7' and python_version != '3.1.*'",
             "version": "==3.6.0"
         },
         "psycopg2-binary": {
@@ -420,7 +420,7 @@
                 "sha256:6b672c02fdf7470df9674ab82263841ce8333fb143f32f021f6cb26f0e512420",
                 "sha256:8ffaa0a53da57e89de14ced7185ac746227a8894dbd5a3c718bf05ddbd1d56cd"
             ],
-            "markers": "python_version != '3.1.*' and python_version >= '2.7' and python_version != '3.3.*' and python_version != '3.2.*' and python_version != '3.0.*'",
+            "markers": "python_version != '3.3.*' and python_version != '3.2.*' and python_version != '3.0.*' and python_version >= '2.7' and python_version != '3.1.*'",
             "version": "==1.9.0"
         },
         "pyjwt": {
@@ -561,7 +561,7 @@
                 "sha256:a68ac5e15e76e7e5dd2b8f94007233e01effe3e50e8daddf69acfd81cb686baf",
                 "sha256:b5725a0bd4ba422ab0e66e89e030c806576753ea3ee08554382c14e685d117b5"
             ],
-            "markers": "python_version != '3.2.*' and python_version >= '2.6' and python_version != '3.0.*' and python_version < '4' and python_version != '3.1.*' and python_version != '3.3.*'",
+            "markers": "python_version != '3.3.*' and python_version != '3.2.*' and python_version != '3.0.*' and python_version != '3.1.*' and python_version >= '2.6' and python_version < '4'",
             "version": "==1.23"
         },
         "uwsgi": {
@@ -600,10 +600,10 @@
         },
         "youtube-dl": {
             "hashes": [
-                "sha256:6309c38d22946e3063f9226fa24d8c2876cf62cebed38ef47726f918c4d843d3",
-                "sha256:ce486648f581ae9d0f5fb85c0f88de871d5e2eede79b913293317e328fda4837"
+                "sha256:1ff26eaca0dc438c5ed7021ebe652a441ad320e1f52f20a01c75eadac9f68654",
+                "sha256:b26a6e0379ae6300c5fca3b610e89473577eaeb4e559877bfe81f6035f9e12f9"
             ],
-            "version": "==2018.7.29"
+            "version": "==2018.8.4"
         },
         "zope.interface": {
             "hashes": [
@@ -617,7 +617,7 @@
                 "sha256:e881ef610ff48aece2f4ee2af03d2db1a146dc7c705561bd6089b2356f61641f",
                 "sha256:f41037260deaacb875db250021fe883bf536bf6414a4fd25b25059b02e31b120"
             ],
-            "markers": "python_version != '3.1.*' and python_version >= '2.7' and python_version != '3.3.*' and python_version != '3.2.*' and python_version != '3.0.*'",
+            "markers": "python_version != '3.3.*' and python_version != '3.2.*' and python_version != '3.0.*' and python_version >= '2.7' and python_version != '3.1.*'",
             "version": "==4.5.0"
         }
     },

@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.db.models import Model as BaseModel
 
 __all__ = ("sane_repr", "Model")
@@ -10,6 +12,8 @@ def r(thing):
         thing = bytes(thing)
     if isinstance(thing, bytes):
         thing = thing.hex()
+    if isinstance(thing, datetime):
+        thing = thing.isoformat()
     return repr(thing)
 
 

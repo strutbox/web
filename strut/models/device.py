@@ -14,7 +14,7 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models
 from structlog import get_logger
 
-from strut.db.models import Model
+from strut.db.models import Model, sane_repr
 
 logger = get_logger()
 channel_layer = get_channel_layer()
@@ -99,6 +99,8 @@ class DeviceActivity(Model):
     message = JSONField(null=True)
     ip_address = models.GenericIPAddressField()
     datetime = models.DateTimeField(auto_now_add=True, db_index=True)
+
+    __repr__ = sane_repr("type", "ip_address", "message", "datetime", "device_id")
 
 
 def send_message_by_serial(serial, message):

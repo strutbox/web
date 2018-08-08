@@ -1,4 +1,4 @@
-import { media, api, chop } from './utils.js';
+import { Strut, media, api, chop } from './utils.js';
 
 const { preact } = window;
 const { Component, h, render } = preact;
@@ -169,7 +169,7 @@ export class UserSidebar extends Component {
               })
             )
           )
-          :
+          : Strut.settings.is_authenticated &&
           h('div', {class: 'field'},
             h('form', {method: 'get', action: '/dashboard/'},
               h('button', {class: 'btn', }, 'Back to dashboard')

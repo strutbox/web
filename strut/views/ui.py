@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.contrib.auth import logout
+from django.db.models import Q
 from django.http import Http404, HttpResponseRedirect
 from django.template.response import TemplateResponse
 from django.urls import reverse
@@ -8,7 +9,7 @@ from django.views.generic import View
 from strut.models import OrganizationMember, PlaylistSubscription, Song, User
 from strut.schemas.music import PlaylistSubscriptionSchema, SongSchema
 from strut.schemas.organization import OrganizationMemberSchema
-from strut.schemas.user import UserSchema
+from strut.schemas.user import DetailedUserSchema, UserSchema
 
 
 class Login(View):
@@ -42,12 +43,16 @@ class Index(View):
 
 class AppView(View):
     script = None
+    auth_required = True
 
     def has_permission(self, request):
         return True
 
+    def is_authenticated(self, request):
+        return not self.auth_required or request.user.is_authenticated
+
     def get(self, request, **kwargs):
-        if not request.user.is_authenticated:
+        if not self.is_authenticated(request):
             return HttpResponseRedirect(reverse("index"))
 
         if not self.has_permission(request):
@@ -55,13 +60,16 @@ class AppView(View):
 
         context = {
             "script": self.script,
-            "settings": {"static": settings.STATIC_URL},
+            "settings": {
+                "static": settings.STATIC_URL,
+                "is_authenticated": request.user.is_authenticated,
+            },
             "initial_data": self.get_initial_data(request),
         }
         return TemplateResponse(request, "app.html", context=context)
 
     def get_initial_data(self, request):
-        return {"me": UserSchema().dump(request.user)}
+        return {"me": DetailedUserSchema().dump(request.user)}
 
 
 class Dashboard(AppView):
@@ -110,15 +118,28 @@ class OrganizationMembersView(AppView):
 
 class UserDetailsView(AppView):
     script = "userDetails.js"
+    auth_required = False
+
+    def is_authenticated(self, request):
+        if request.user.is_authenticated:
+            return True
+
+        return User.objects.filter(
+            email=self.kwargs["email"], settings__privacy_public=True
+        ).exists()
 
     def has_permission(self, request):
-        return User.objects.filter(
-            email=self.kwargs["email"],
-            organizationmember__organization__in=OrganizationMember.objects.filter(
-                user=request.user, is_active=True
-            ).values_list("organization_id"),
-            organizationmember__is_active=True,
-        ).exists()
+        options = Q(settings__privacy_public=True)
+
+        if request.user.is_authenticated:
+            options |= Q(
+                organizationmember__organization__in=OrganizationMember.objects.filter(
+                    user=request.user, is_active=True
+                ).values_list("organization_id"),
+                organizationmember__is_active=True,
+            )
+
+        return User.objects.filter(options, email=self.kwargs["email"]).exists()
 
     def get_initial_data(self, request):
         user = User.objects.get(email=self.kwargs["email"])

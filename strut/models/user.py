@@ -1,5 +1,6 @@
 # import enum
 from django.contrib.auth.models import BaseUserManager
+from django.contrib.postgres.fields import JSONField
 from django.db import models
 
 from strut.db.models import Model, sane_repr
@@ -22,6 +23,7 @@ class User(Model):
     email = models.TextField()
     is_active = models.BooleanField(default=True)
     is_superuser = models.BooleanField(default=False)
+    settings = JSONField(null=True)
 
     is_authenticated = True
     is_anonymous = False

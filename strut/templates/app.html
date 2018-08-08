@@ -15,11 +15,16 @@
           <img class="App-logo" src="{% static "logo-black.svg" %}"  />
           <div class="pull-right">
             <div class="User-nav">
-              {% comment %}<img id="img-avatar" />{% endcomment %}
+              {% if request.user.is_authenticated %}
               <form method="post" action="{% url "logout" %}">
                 {% csrf_token %}
                 <button class="btn">Log Out</button>
               </form>
+              {% else %}
+              <form method="get" action="{% url "login" %}">
+                <button class="btn">Login / Register</button>
+              </form>
+              {% endif %}
             </div>
           </div>
         </div>

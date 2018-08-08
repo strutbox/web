@@ -137,11 +137,53 @@ export class Playlist extends Component {
 export class TextInput extends Component {
   render() {
     return h('input', {
-      value: this.state.value,
       class: 'Input',
-      'type': 'text',
+      type: 'text',
       ...this.props
     });
+  }
+}
+
+class Checkbox extends Component {
+  render() {
+    return (
+      h('div', {},
+        h('label', {class: 'switch'},
+          h('input', {
+            type: 'checkbox',
+            ...this.props
+          }),
+          h('span', {'class': 'slider'}),
+          h('div', {}, this.props.label),
+        ),
+      )
+    )
+  }
+}
+
+class UserSettings extends Component {
+  onPrivacyChange(e) {
+
+    api('user/settings', {
+      method: 'POST',
+      form: {
+        privacy_public: e.target.checked,
+      }
+    });
+  }
+
+  render() {
+    const { settings } = this.props;
+    return (
+      h('div', {class: 'field'},
+        h('h6', {}, 'Settings'),
+        h(Checkbox, {
+          label: 'Share Publicly',
+          checked: settings.privacy_public,
+          onChange: this.onPrivacyChange.bind(this),
+        }),
+      )
+    )
   }
 }
 
@@ -160,7 +202,7 @@ export class UserSidebar extends Component {
         ),
         (me ?
           h('div', {class: 'field'},
-            h('label', {}, 'Memberships'),
+            h('h6', {}, 'Memberships'),
             h('ul', {},
               memberships.map((m) => {
                 return h('li', {}, (
@@ -175,7 +217,8 @@ export class UserSidebar extends Component {
               h('button', {class: 'btn', }, 'Back to dashboard')
             )
           )
-        )
+        ),
+        (me && h(UserSettings, user)),
       )
     )
   }

@@ -159,6 +159,10 @@ h6, .field label {
   margin: 0 0 24px;
 }
 
+.field h6 {
+  font-weight: normal;
+}
+
 
 .song-list {
   margin-bottom: 50px;
@@ -297,4 +301,60 @@ h6, .field label {
 
 .hidden {
   display: none;
+}
+
+/* The switch - the box around the slider */
+label.switch {
+  position: relative;
+  display: inline-block;
+  width: 30px;
+  height: 20px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {display:none;}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  transform: rotate(-2.2deg) skewX(2deg);
+
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #FF00B4;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #FF00B4;
+}
+
+input:checked + .slider:before {
+  transform: translateX(10px);
+}
+
+.switch div {
+  margin-left: 40px;
+  font-size: 16px;
+  width: 200px;
+  height: 20px;
+  line-height: 20px;
 }

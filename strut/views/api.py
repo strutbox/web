@@ -12,6 +12,7 @@ from strut.models import (
     SongMeta,
 )
 from strut.schemas.music import SongJobSchema, SongMetaSchema, SongSchema
+from strut.schemas.user import UserSettingsSchema
 
 
 @method_decorator(login_required, name="dispatch")
@@ -98,3 +99,13 @@ class SongJobView(ApiView):
             status__in=[SongJob.Status.New, SongJob.Status.InProgress],
         ).order_by("-date_created")
         return self.respond({"jobs": SongJobSchema(many=True).dump(jobs)})
+
+
+class UserSettingsView(ApiView):
+    def post(self, request):
+        request.user.settings = {
+            **(request.user.settings or {}),
+            **UserSettingsSchema().load(request.POST),
+        }
+        request.user.save()
+        return self.respond({})

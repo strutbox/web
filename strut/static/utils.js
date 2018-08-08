@@ -20,14 +20,21 @@ const getCookie = (name) => {
 };
 
 export const api = (endpoint, options = {}) => {
-  const { query } = options;
+  const { query, form } = options;
   delete options.query;
+  delete options.form;
 
   let qs = '';
   if (query !== undefined) {
     qs = '?' + Object.keys(query).map(
       k => encodeURIComponent(k) + '=' + encodeURIComponent(query[k])
     ).join('&');
+  }
+
+  if (form !== undefined) {
+    const f = new FormData();
+    Object.keys(form).forEach(k => f.append(k, form[k]));
+    options.body = f;
   }
 
   const headers = new Headers();

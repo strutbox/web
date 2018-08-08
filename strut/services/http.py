@@ -35,6 +35,7 @@ class Service:
             "thunder-lock": True,
             "virtualenv": sys.prefix,
             "vacuum": True,
+            "log-x-forwarded-for": True,
             "log-format": '%(addr) - %(user) [%(ltime)] "%(method) %(uri) %(proto)" %(status) %(size) "%(referer)" "%(uagent)"',
         }
 

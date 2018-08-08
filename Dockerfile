@@ -49,8 +49,10 @@ RUN set -ex; \
     ; \
     strut --help
 
-ENTRYPOINT ["/usr/src/strut/docker-entrypoint.sh"]
+ARG BUILD_REVISION
+ENV BUILD_REVISION $BUILD_REVISION
 
+ENTRYPOINT ["/usr/src/strut/docker-entrypoint.sh"]
 EXPOSE 8000
 
 ENV STRUT_BIND 0.0.0.0:8000

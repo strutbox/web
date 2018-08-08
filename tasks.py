@@ -1,6 +1,7 @@
 import os
 
 from invoke import task
+from invoke.exceptions import UnexpectedExit
 
 os.environ["INVOKE_RUN_ECHO"] = "1"
 
@@ -43,8 +44,19 @@ def lint(ctx):
 
 
 @task
-def build(ctx):
-    ctx.run("docker build --pull --rm -t strutbox/web .")
+def build(ctx, force=False):
+    dirty = False
+    rv = ctx.run("git diff --quiet", warn=True)
+    dirty = rv.failed
+    if dirty and not force:
+        print("Aborted: HEAD is dirty.")
+        raise UnexpectedExit(rv)
+    rev = ctx.run("git rev-parse HEAD").stdout.strip()
+    if dirty:
+        rev = f"{rev}-dirty"
+    ctx.run(
+        f"docker build --build-arg BUILD_REVISION={rev} --pull --rm -t strutbox/web ."
+    )
 
 
 @task(pre=[build])

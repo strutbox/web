@@ -77,6 +77,9 @@ class Device(Model):
     def load_file(self, file):
         self.send_message({"type": "load", "data": file.hexdigest()})
 
+    def ping(self):
+        self.send_message({"type": "ping"})
+
 
 class DeviceAssociation(Model):
     organization = models.ForeignKey("Organization", models.CASCADE)

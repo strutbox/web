@@ -24,7 +24,7 @@ def psql(ctx):
 
 @task
 def migrate(ctx):
-    ctx.run("strut migrate --generate")
+    ctx.run("strut migrate")
 
 
 @task

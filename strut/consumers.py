@@ -5,7 +5,7 @@ from channels.generic.http import AsyncHttpConsumer
 from channels.generic.websocket import AsyncWebsocketConsumer
 from django.core.signing import BadSignature, TimestampSigner
 
-from strut.models import Device
+from strut.models import Device, DeviceActivity
 
 
 class DeviceConsumer(AsyncWebsocketConsumer):
@@ -29,6 +29,7 @@ class DeviceConsumer(AsyncWebsocketConsumer):
             [
                 self.channel_layer.group_add(self.device.serial, self.channel_name),
                 self.channel_layer.group_add("alldevices", self.channel_name),
+                device_log(self.device, DeviceActivity.Type.WS_CONNECT, self.scope),
             ]
         )
         await self.accept()
@@ -40,6 +41,9 @@ class DeviceConsumer(AsyncWebsocketConsumer):
                     self.channel_layer.group_discard("alldevices", self.channel_name),
                     self.channel_layer.group_discard(
                         self.device.serial, self.channel_name
+                    ),
+                    device_log(
+                        self.device, DeviceActivity.Type.WS_DISCONNECT, self.scope
                     ),
                 ]
             )
@@ -67,3 +71,13 @@ class NullHttpConsumer(AsyncHttpConsumer):
 @database_sync_to_async
 def get_device_by_serial(serial):
     return Device.objects.get(serial=serial)
+
+
+class FakeRequest:
+    def __init__(self, client):
+        self.META = {"REMOTE_ADDR": client[0]}
+
+
+@database_sync_to_async
+def device_log(device, type, scope):
+    device.log(FakeRequest(scope.get("client", ["0.0.0.0"])), type)

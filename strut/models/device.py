@@ -89,6 +89,8 @@ class DeviceActivity(Model):
     class Type(enum.IntEnum):
         API_PING = 0
         API_BOOTSTRAP = 1
+        WS_CONNECT = 2
+        WS_DISCONNECT = 3
 
     device = models.ForeignKey(Device, models.CASCADE)
     type = models.PositiveSmallIntegerField(

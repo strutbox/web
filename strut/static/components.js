@@ -163,7 +163,6 @@ class Checkbox extends Component {
 
 class UserSettings extends Component {
   onPrivacyChange(e) {
-
     api('user/settings', {
       method: 'POST',
       form: {
@@ -173,7 +172,10 @@ class UserSettings extends Component {
   }
 
   render() {
-    const { settings } = this.props;
+    const settings = {
+      ...UserSettings.defaults,
+      ...(this.props.settings || {}),
+    };
     return (
       h('div', {class: 'field'},
         h('h6', {}, 'Settings'),
@@ -186,6 +188,10 @@ class UserSettings extends Component {
     )
   }
 }
+
+UserSettings.defaults = {
+  privacy_public: false,
+};
 
 export class UserSidebar extends Component {
   render() {

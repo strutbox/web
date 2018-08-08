@@ -2,9 +2,9 @@ import click
 
 
 @click.command()
-@click.option("--generate", is_flag=True)
+@click.option("--fake", is_flag=True)
 @click.argument("migration_name", required=False)
-def migrate(generate, migration_name):
+def migrate(fake, migration_name):
     "Apply database migrations."
     import strut
 
@@ -12,7 +12,10 @@ def migrate(generate, migration_name):
 
     from django.core.management import call_command
 
-    if generate:
-        call_command("makemigrations", "strut")
+    app_label = None
+    if migration_name:
+        app_label = "strut"
 
-    call_command("migrate", app_label=None, migration_name=migration_name)
+    call_command(
+        "migrate", migration_name=migration_name, app_label=app_label, fake=fake
+    )

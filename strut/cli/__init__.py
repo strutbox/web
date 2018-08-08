@@ -1,9 +1,24 @@
+import os
 import click
 from pkgutil import walk_packages
 
 
+def print_revision(ctx, param, value):
+    try:
+        click.echo(os.environ["BUILD_REVISION"])
+    except KeyError:
+        raise click.ClickException("Unknown BUILD_REVISION")
+    ctx.exit()
+
+
 @click.group()
 @click.version_option()
+@click.option(
+    "--revision",
+    is_flag=True,
+    callback=print_revision,
+    help="Show the git revision and exit.",
+)
 def main():
     """\b
    _____________  __  ________

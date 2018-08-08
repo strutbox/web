@@ -28,6 +28,7 @@ uWSGI = ">=2.0.17,<2.1"
 websockets = "*"
 youtube_dl = "*"
 channels-redis = "*"
+raven = "*"
 
 [dev-packages]
 invoke = "*"

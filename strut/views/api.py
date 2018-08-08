@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.core.signals import got_request_exception
 from django.http import JsonResponse
 from django.utils.decorators import method_decorator
 from django.views.generic import View
@@ -25,6 +26,7 @@ class ApiView(View):
         try:
             return super().dispatch(request, *args, **kwargs)
         except Exception as e:
+            got_request_exception.send(sender=self, request=request)
             return self.respond({"error": str(e)}, status=500)
 
 

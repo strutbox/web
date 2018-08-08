@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.staticfiles",
     "social_django",
+    "raven.contrib.django.raven_compat",
     "strut.apps.StrutConfig",
 ]
 
@@ -167,3 +168,10 @@ EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
 EMAIL_USE_TLS = env("EMAIL_USE_TLS", default=False)
 EMAIL_USE_SSL = env("EMAIL_USE_SSL", default=False)
 DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", default="noreply@localhost")
+
+RAVEN_CONFIG = {
+    "dsn": os.environ.get("SENTRY_DSN"),
+    "release": os.environ.get("BUILD_REVISION"),
+    "environment": "debug" if DEBUG else "production",
+    "include_paths": ["strut"],
+}

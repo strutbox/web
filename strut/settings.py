@@ -107,7 +107,11 @@ TEMPLATES = [
 WSGI_APPLICATION = "strut.wsgi.application"
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
-DATABASES = {"default": dj_database_url.config("STRUT_DATABASE_URL")}
+DATABASES = {
+    "default": dj_database_url.config(
+        "STRUT_DATABASE_URL", default="postgres://strut@127.0.0.1:5432/strut"
+    )
+}
 
 AUTH_USER_MODEL = "strut.User"
 

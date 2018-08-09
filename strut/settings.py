@@ -70,6 +70,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "strut.middleware.http.ProxyFix",
+    "strut.middleware.security.CSPMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -175,3 +176,5 @@ RAVEN_CONFIG = {
     "environment": "debug" if DEBUG else "production",
     "include_paths": ["strut"],
 }
+
+CSP_HEADER = f"script-src 'self'; style-src 'self'; img-src 'self' https://img.youtube.com; media-src https://{GOOGLE_STORAGE_BUCKET}.storage.googleapis.com; font-src 'self'; connect-src 'self'"

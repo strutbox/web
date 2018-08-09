@@ -3,95 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" "text/css" href="{% static "fonts/fonts.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "fonts/fonts.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "index.css" %}">
     <link rel="icon" href="{% static "favicon.png" %}" type="image/x-icon" />
     <title>STRUT</title>
-    <style>
-* {
-  box-sizing: border-box;
-}
-
-body, html {
-  font-family: Blackout;
-  font-size: 16px;
-  -webkit-font-smoothing: antialiased;
-  background: #000;
-  padding: 0;
-  margin: 0;
-}
-
-.App {
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 60px 0 0;
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 1s ease;
-  height: 64px;
-}
-
-.App-footer {
-  font-family: sans-serif;
-  color: #7a7f83;
-  text-align: center;
-  padding: 60px 0;
-}
-
-.App-footer strong {
-  font-family: Blackout;
-  color: #fff;
-}
-
-.App-footer strong sup {
-  font-size: .5em;
-}
-
-.pull-right {
-  float: right;
-}
-
-.User-nav button {
-  transform: rotate(-6deg) skewX(5deg);
-  font-size: 22px;
-}
-
-.btn {
-  cursor: pointer;
-  font-family: Blackout;
-  border: 0;
-  border-radius: 0;
-  background: #fff;
-  font-size: 18px;
-  color: #000;
-  padding: 12px 24px;
-  transform: rotate(-4deg) skewX(5deg);
-}
-
-.btn:hover {
-  animation: Input-focus 1 .5s ease forwards;
-}
-
-
-@keyframes App-logo-spin {
-  0% { transform: rotate(0deg) scale(.5); }
-  50% { transform: rotate(-10deg) scale(1.5); }
-  100% { transform: rotate(0deg) scale(.5); }
-}
-
-@keyframes Input-focus {
-  from { transform: rotate(2.2deg) skewX(3deg) scale(1); }
-  to { transform: rotate(-5.2deg) skewX(23deg) scale(1.4); }
-}
-
-.error {
-  background: #c23232;
-  line-height: 2em;
-  padding: 20px;
-  text-align: center;
-  color: #fff;
-}
-    </style>
   </head>
   <body>
     {% if error %}<div class="error">{{ error }}</div>{% endif %}

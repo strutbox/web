@@ -9,3 +9,5 @@ node_modules/
 pyproject.toml
 setup.cfg
 scratch/
+conftest.py
+tests/

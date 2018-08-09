@@ -36,6 +36,9 @@ ipython = "*"
 isort = "*"
 black = "*"
 flake8 = "*"
+pytest = "*"
+pytest-django = "*"
+pytest-xdist = "*"
 
 [requires]
 python_version = "3.7"

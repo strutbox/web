@@ -4,6 +4,8 @@ from pkgutil import walk_packages
 
 
 def print_revision(ctx, param, value):
+    if not value or ctx.resilient_parsing:
+        return
     try:
         click.echo(os.environ["BUILD_REVISION"])
     except KeyError:
@@ -15,7 +17,9 @@ def print_revision(ctx, param, value):
 @click.version_option()
 @click.option(
     "--revision",
+    expose_value=False,
     is_flag=True,
+    is_eager=True,
     callback=print_revision,
     help="Show the git revision and exit.",
 )

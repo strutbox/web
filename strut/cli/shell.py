@@ -1,3 +1,5 @@
+import os
+
 import click
 
 
@@ -5,11 +7,13 @@ import click
 def shell():
     "Start interactive python shell."
 
+    # Disable Sentry before we shell
+    os.environ.pop("SENTRY_DSN", None)
+
     import strut
 
     strut.setup()
 
-    import os
     import sys
     import requests
     from django.conf import settings

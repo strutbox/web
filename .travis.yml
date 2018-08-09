@@ -1,0 +1,22 @@
+sudo: required
+
+language: python
+python:
+  - "3.7-dev"
+
+services:
+  - docker
+
+before_install:
+  - pip install -U pip
+  - pip uninstall -y pytest mock
+  - pip install pipenv==2018.7.1
+  # - sudo docker run -d --net=host -e POSTGRES_USER=strut postgres:11-alpine
+  # - sudo docker run -d --net=host redis:5.0-rc-alpine
+
+install:
+  - PIPENV_YES=1 pipenv install --dev
+
+script:
+  - strut --help
+  - pipenv run pytest

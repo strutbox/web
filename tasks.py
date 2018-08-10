@@ -61,6 +61,11 @@ def build(ctx, force=False):
 
 @task(pre=[build])
 def deploy(ctx):
+    branch = ctx.run("git rev-parse --abbrev-ref HEAD").stdout.strip()
+    if branch != "master":
+        print("Aborted: Only deploy master.")
+        raise UnexpectedExit()
+
     ctx.run("docker save -o /tmp/strutbox.tar strutbox/web")
     ctx.run("scp -C /tmp/strutbox.tar strut.zone:")
     ctx.run("ssh strut.zone sudo ./deploy.sh")

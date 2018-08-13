@@ -37,6 +37,9 @@ class YouTubeResolver:
 
             self.job = FakeSongJob()
 
+    def bind_job(self, job):
+        self.job = job
+
     def sync(self, force=False, save=True):
         if not force and self.meta.is_complete:
             return self.meta.data

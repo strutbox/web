@@ -2,7 +2,6 @@ import os
 import subprocess
 from tempfile import mkstemp
 
-from strut.mediaresolvers.youtube import YouTubeResolver
 from strut.models import Device, File, Song, SongJob, SongMeta
 
 
@@ -22,7 +21,8 @@ def process_songjob(job_id):
         job.record(str(e), status=SongJob.Status.Failure)
         return
 
-    resolver = YouTubeResolver(meta, job)
+    resolver = meta.resolver
+    resolver.bind_job(job)
 
     try:
         source = resolver.fetch()

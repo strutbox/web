@@ -29,13 +29,6 @@ def migrate(ctx):
 
 
 @task
-def format(ctx):
-    ctx.run("python -m isort -rc .")
-    ctx.run("python -m black .")
-    ctx.run("python -W ignore -m flake8")
-
-
-@task
 def lint(ctx):
     # Need to ignore python warnings -W
     # see https://github.com/PyCQA/pycodestyle/pull/735
@@ -43,7 +36,13 @@ def lint(ctx):
     ctx.run("python -W ignore -m flake8")
 
 
-@task
+@task(post=[lint])
+def format(ctx):
+    ctx.run("python -m isort -rc .")
+    ctx.run("python -m black .")
+
+
+@task(pre=[lint])
 def build(ctx, force=False):
     dirty = False
     rv = ctx.run("git diff --quiet", warn=True)

@@ -15,12 +15,11 @@ class Service:
 
     def start(self):
         import strut
-
-        strut.setup()
-
         from channels.routing import get_default_application
         from daphne.access import AccessLogGenerator
         from daphne.server import Server
+
+        strut.setup()
 
         application = get_default_application()
 
@@ -39,4 +38,5 @@ class Service:
             verbosity=1,
             proxy_forwarded_address_header="X-Forwarded-For",
             proxy_forwarded_port_header="X-Forwarded-Port",
+            proxy_forwarded_proto_header="X-Forwarded-Proto",
         ).run()

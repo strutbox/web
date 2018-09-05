@@ -9,7 +9,14 @@ from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from structlog import get_logger
 
-from strut.models import Device, LockitronLock, LockitronUser, Song, User
+from strut.models import (
+    Device,
+    LockitronLock,
+    LockitronUser,
+    OrganizationDomain,
+    Song,
+    User,
+)
 
 logger = get_logger()
 
@@ -110,7 +117,12 @@ class Lockitron(HooksView):
             },
         )
 
-        if created:
+        if (
+            created
+            and OrganizationDomain.objects.filter(
+                domain=email.split("@", 1)[1], organization=lockitron_lock.organization
+            ).exists()
+        ):
             send_mail(
                 "🎉 Welcome to STRUT™!",
                 get_template("welcome.txt").render(

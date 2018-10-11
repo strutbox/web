@@ -31,6 +31,7 @@ RUN set -ex; \
     ; \
     \
     export PIPENV_CACHE_DIR="$(mktemp -d)"; \
+    pip install pip==18.0; \
     pip install pipenv==2018.7.1; \
     pipenv install --deploy --system; \
     \

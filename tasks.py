@@ -227,3 +227,11 @@ def lockitron(ctx):
     for k, v in resp.headers.items():
         sys.stdout.write(f"< {k}: {v}\n")
     sys.stdout.write(f"\n{resp.text}\n")
+
+
+@task
+def neverupgrade(ctx):
+    ctx.run("python -m pipenv update")
+    ctx.run("git diff")
+    ctx.run("git commit -am '#neverupgrade'")
+    ctx.run("git push")

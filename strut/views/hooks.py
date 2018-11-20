@@ -98,7 +98,7 @@ class Lockitron(HooksView):
 
         try:
             lockitron_lock = LockitronLock.objects.get(lock_id=lock["id"])
-        except LockitronLock.DoesNotExist as e:
+        except LockitronLock.DoesNotExist:
             return HttpResponse(status=404)
 
         if lockitron_lock.name != lock["name"]:

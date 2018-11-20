@@ -194,7 +194,7 @@ def import_(ctx, path):
 def rebuild(ctx):
     try:
         dropdb(ctx)
-    except Exception as e:
+    except Exception:
         pass
     createdb(ctx)
     migrate(ctx)

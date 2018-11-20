@@ -31,7 +31,7 @@ RUN set -ex; \
     ; \
     \
     export PIPENV_CACHE_DIR="$(mktemp -d)"; \
-    pip install pipenv==2018.10.13; \
+    pip install pipenv==2018.11.14; \
     pipenv install --deploy --system; \
     \
     apk del .build-deps; \

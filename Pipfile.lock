@@ -53,10 +53,10 @@
         },
         "autobahn": {
             "hashes": [
-                "sha256:74914efa7c810323ef838025697024b0858c81a79456c9f581947a2c124c3699",
-                "sha256:c7e775e46fc033160fa89942de4953ca739f26167f74431dc2c8a3cd165b8755"
+                "sha256:43262e500aaf8b89fb5f0b60ab13163500ee877908cdd6861208546d95c6dba0",
+                "sha256:81ee21d654886cccdce01f9f294c71ff2f6ae7b34244e52b522fddc5400736b3"
             ],
-            "version": "==18.11.1"
+            "version": "==18.11.2"
         },
         "automat": {
             "hashes": [
@@ -630,11 +630,11 @@
         },
         "youtube-dl": {
             "hashes": [
-                "sha256:a77beb6b3b3e04ffa85d8b9ee7e9b85e5d1e52b99ce45b170458a8b55bf4d3bc",
-                "sha256:b04c4ab26f2cff29f9cce7db1ccd7829ef34a4add09c26e9b14beeb169dcdace"
+                "sha256:720d13fa8a11ea155399c0581a647f04dc035e303cb843c7eb2b82bb400c52d5",
+                "sha256:e7106fa6d8429eb31be6243e16d87f48ee42d924d70f803493d9f721e5275e71"
             ],
             "index": "pypi",
-            "version": "==2018.11.18"
+            "version": "==2018.11.23"
         },
         "zope.interface": {
             "hashes": [

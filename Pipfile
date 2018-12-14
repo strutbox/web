@@ -39,7 +39,7 @@ flake8 = "*"
 pytest = "*"
 pytest-django = "*"
 pytest-xdist = "*"
-pipenv = "==2018.11.14"
+pipenv = "==2018.11.26"
 
 [requires]
 python_version = "3.7"

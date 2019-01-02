@@ -231,6 +231,25 @@ def lockitron(ctx):
 
 @task
 def neverupgrade(ctx):
+    from pkg_resources import parse_version
+    import requests
+    import re
+
+    version = None
+    for tags in requests.get('https://registry.hub.docker.com/v1/repositories/python/tags').json():
+        m = re.match(r'^3\.7\.\d+\-alpine3\.8$', tags['name'])
+        if m:
+            v = parse_version(tags['name'].split('-', 1)[0])
+            if version is None or v > version:
+                version = v
+
+    with open('Dockerfile') as fp:
+        df = fp.read().splitlines()
+
+    with open('Dockerfile', 'w') as fp:
+        df[0] = f'FROM python:{str(v)}-alpine3.8'
+        fp.write('\n'.join(df) + '\n')
+
     ctx.run("python -m pipenv update")
     ctx.run("git diff")
     ctx.run("git commit -am '#neverupgrade'")

@@ -66,7 +66,6 @@ class ResponseFile:
         response["Last-Modified"] = self.mtime
         response["Content-Length"] = self.content_length
         response["Cache-Control"] = "must-revalidate"
-        response["Vary"] = "Accept-Encoding"
         if self.encoding:
             response["Content-Encoding"] = self.encoding
         if self.content_type in CORS_TYPES:

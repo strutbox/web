@@ -53,6 +53,7 @@ class ResponseFile:
     content_type: str
     encoding: Optional[str]
     mtime: str
+    content_length: int
 
     def get_response(self, request):
         # Handle 304 response
@@ -63,6 +64,7 @@ class ResponseFile:
         self.fp.seek(0)
         response = FileResponse(self.fp, content_type=self.content_type)
         response["Last-Modified"] = self.mtime
+        response["Content-Length"] = self.content_length
         response["Cache-Control"] = "must-revalidate"
         response["Vary"] = "Accept-Encoding"
         if self.encoding:
@@ -103,7 +105,10 @@ def open_fp(path):
         return DirectoryResponseFile
 
     mtime = http_date(int(os.path.getmtime(absolute_path)))
-    return ResponseFile(NonClosingFile(fp), content_type, encoding, mtime)
+    content_length = os.path.getsize(absolute_path)
+    return ResponseFile(
+        NonClosingFile(fp), content_type, encoding, mtime, content_length
+    )
 
 
 if settings.STATIC_FP_CACHE > 0:

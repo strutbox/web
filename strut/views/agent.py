@@ -1,4 +1,5 @@
 import re
+from dataclasses import dataclass
 from secrets import compare_digest
 from time import time
 
@@ -13,7 +14,6 @@ from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from structlog import get_logger
 
-from dataclasses import dataclass
 from strut.http import DeviceResponse
 from strut.models import Device, DeviceActivity, FirmwareVersion
 

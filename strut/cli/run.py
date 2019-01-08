@@ -1,8 +1,7 @@
+from dataclasses import dataclass
 from typing import Tuple
 
 import click
-
-from dataclasses import dataclass
 
 
 @dataclass

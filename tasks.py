@@ -38,7 +38,7 @@ def lint(ctx):
 
 @task(post=[lint])
 def format(ctx):
-    ctx.run("python -m isort -rc .")
+    ctx.run("python -m isort -b dataclasses -rc .")
     ctx.run("python -m black .")
 
 

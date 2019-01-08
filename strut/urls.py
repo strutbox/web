@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.urls import include, re_path as path
+from django.views.generic.base import RedirectView
 
 from .views import agent, api, hooks, static, ui
 
@@ -32,6 +33,9 @@ hooks_urls = [path("^lockitron/$", hooks.Lockitron.as_view())]
 
 urlpatterns = [
     path("^$", ui.Index.as_view(), name="index"),
+    path(
+        "^favicon\.ico$", RedirectView.as_view(url=f"{settings.STATIC_URL}favicon.png")
+    ),
     path("^dashboard/$", ui.Dashboard.as_view(), name="dashboard"),
     path(
         "^users/", include([path("^(?P<email>[^\/]+)/$", ui.UserDetailsView.as_view())])
@@ -54,8 +58,8 @@ urlpatterns = [
         include([path("^0/", include(v0_urls)), path("^hooks/", include(hooks_urls))]),
     ),
     path(
-        "^%s" % settings.STATIC_URL.lstrip("/"),
-        include([path("^(?P<path>.*)$", static.Static.as_view())]),
+        f"^{settings.STATIC_URL.lstrip('/')}",
+        include([path("^(?P<path>.*)$", static.Static.as_view(), name="static")]),
     ),
     path("^device-setup/$", ui.DeviceSetup.as_view(), name="device-setup"),
     path("", include("social_django.urls", namespace="social")),

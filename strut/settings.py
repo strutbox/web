@@ -146,6 +146,7 @@ USE_L10N = True
 USE_TZ = True
 
 STATIC_URL = env("STATIC_URL", "/static/")
+STATIC_FP_CACHE = 0 if DEBUG else 100
 
 SILENCED_SYSTEM_CHECKS = ["auth.W004"]
 

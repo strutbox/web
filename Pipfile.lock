@@ -322,11 +322,11 @@
         },
         "marshmallow": {
             "hashes": [
-                "sha256:3133fb98afd627dcd8c06e4705f0ecea1b28003a53820d0266fa6c0ff7cf215c",
-                "sha256:6489e72ea75a30cb07686ce01e24bf65fc7f42edf429153a70abb9e38e56ef52"
+                "sha256:313836a251e67d2ef06631f3bddfffdd7d1c5b16b4efc76244afa6218c5e17b0",
+                "sha256:c850c60dbb840860f58f161b81ae25cf84807eeae3f9a1d9a2f8c704d6bd2b80"
             ],
             "index": "pypi",
-            "version": "==3.0.0rc2"
+            "version": "==3.0.0rc3"
         },
         "msgpack": {
             "hashes": [
@@ -353,10 +353,10 @@
         },
         "oauthlib": {
             "hashes": [
-                "sha256:ac35665a61c1685c56336bda97d5eefa246f1202618a1d6f34fccb1bdd404162",
-                "sha256:d883b36b21a6ad813953803edfa563b1b579d79ca758fe950d1bc9e8b326025b"
+                "sha256:0a8b2e0daa7afb62bd1b0b387b7a3723fa9a35d1183694ca5a5c8e3d6df59913",
+                "sha256:8932fb34f7c6a4fc50c9f423b105923ed2e6df091b3c388d182540db02c581a0"
             ],
-            "version": "==2.1.0"
+            "version": "==3.0.0"
         },
         "petname": {
             "hashes": [
@@ -524,10 +524,10 @@
         },
         "requests-oauthlib": {
             "hashes": [
-                "sha256:be76f2bb72ca5525998e81d47913e09b1ca8b7957ae89b46f787a79e68ad5e61",
-                "sha256:eabd8eb700ebed81ba080c6ead96d39d6bdc39996094bd23000204f6965786b0"
+                "sha256:bd6533330e8748e94bf0b214775fed487d309b8b8fe823dc45641ebcd9a32f57",
+                "sha256:d3ed0c8f2e3bbc6b344fa63d6f933745ab394469da38db16bdddb461c7e25140"
             ],
-            "version": "==1.1.0"
+            "version": "==1.2.0"
         },
         "rq": {
             "hashes": [
@@ -562,11 +562,11 @@
         },
         "social-auth-core": {
             "hashes": [
-                "sha256:744c8b8498cf7e970151e8ea96a8d3e3aa818986ace7e1a0f39295fc193f4529",
-                "sha256:b8a34e7eb71c66e4d68deb007c81d4f74d4e0bc52c1c4f871a7758db0a0c268e",
-                "sha256:cec8e0a2297a23c0e1cab21bbcfaf32c8378fdb98762f47e315bbc65c3a83c89"
+                "sha256:3584a6b96b5c505bb2d2a5c35a9f8656addd895bfa64c58f9c40d4e3d824ea26",
+                "sha256:54eb683eeee677a45e4e544995b0c62a88d705ae5d9509256187f8d6a943a32a",
+                "sha256:d47c4f48484847faf043e975ec07300be84d64bfcf8268029e2383759222b609"
             ],
-            "version": "==2.0.0"
+            "version": "==3.0.0"
         },
         "structlog": {
             "hashes": [
@@ -632,11 +632,11 @@
         },
         "youtube-dl": {
             "hashes": [
-                "sha256:785664b2e090f82cc4edbcca36f0bc84efc25ebbe77a84fff72a24bf5aae69c0",
-                "sha256:a4c0fd832a4efd75164349bc5c4fcf40bf3da58fe596d8fd1e2e0da60bb96aa8"
+                "sha256:148882ede86dbc2f1314b2f22851caf828d7c77a95fb9577ab320dfeb4c57c63",
+                "sha256:e98e374c0c36f8324987387cd2f3dae6c438e586b2e558c7314974d0a7dc067e"
             ],
             "index": "pypi",
-            "version": "==2019.1.10"
+            "version": "==2019.1.16"
         },
         "zope.interface": {
             "hashes": [

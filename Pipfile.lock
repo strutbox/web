@@ -632,11 +632,11 @@
         },
         "youtube-dl": {
             "hashes": [
-                "sha256:62e61c10d2f0adb003cda157e5779ab6935297a997dac3e64ad72874fc9f91e6",
-                "sha256:9944a9d1be1f5a7c31fb8dfb4d8221335c010afcc6e66bf1a40ca386e78e1a4e"
+                "sha256:b815ff77a4b90b74cd4fc8fc1e2e0f2e5f60914f529d1f8203ed02303d9ad46e",
+                "sha256:dffe6e83e434938f5c94536814ffa0138a232ab8c5d66b3cdbc1433a04763673"
             ],
             "index": "pypi",
-            "version": "==2019.1.23"
+            "version": "==2019.1.24"
         },
         "zope.interface": {
             "hashes": [
@@ -819,10 +819,9 @@
         },
         "parso": {
             "hashes": [
-                "sha256:35704a43a3c113cce4de228ddb39aab374b8004f4f2407d070b6a2ca784ce8a2",
-                "sha256:895c63e93b94ac1e1690f5fdd40b65f07c8171e3e53cbd7793b5b96c0e0a7f24"
+                "sha256:5a120be2e8863993b597f1c0437efca799e90e0793c98ae5d4e34ebd00140e31"
             ],
-            "version": "==0.3.1"
+            "version": "==0.3.2"
         },
         "pexpect": {
             "hashes": [
@@ -959,10 +958,11 @@
         },
         "virtualenv-clone": {
             "hashes": [
-                "sha256:3427df72d55523755a8e37270de5a63363f6f2c506bf8407f19cc580ebad8085",
-                "sha256:fedbb2ee2e72f26fefadf677a0a27994f2b91ca893ccc1b42e1f4ad50bfd0ab2"
+                "sha256:217bd3f0880c9f85672c0bcc9ad9e0354ab7dfa89c2f117e63aa878b4279f5bf",
+                "sha256:316c8a05432a7adb5e461709759aca18c51433ffc2c33e2e80c9e51c452d339f",
+                "sha256:f2a07ed255f3abaceef8c8442512d8cdb2ba9f867e212d8a51680c7790a85033"
             ],
-            "version": "==0.5.0"
+            "version": "==0.5.1"
         },
         "wcwidth": {
             "hashes": [

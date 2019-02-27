@@ -68,4 +68,5 @@ class Service:
 
             os.environ[key] = value
 
-        os.execvp("uwsgi", ("uwsgi",))
+        import pyuwsgi
+        pyuwsgi.run([])

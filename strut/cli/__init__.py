@@ -1,6 +1,7 @@
 import os
-import click
 from pkgutil import walk_packages
+
+import click
 
 
 def print_revision(ctx, param, value):

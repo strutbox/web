@@ -30,10 +30,7 @@ def migrate(ctx):
 
 @task
 def lint(ctx):
-    # Need to ignore python warnings -W
-    # see https://github.com/PyCQA/pycodestyle/pull/735
-    # Until new flake8 release
-    ctx.run("python -W ignore -m flake8")
+    ctx.run("python -m flake8")
 
 
 @task(post=[lint])

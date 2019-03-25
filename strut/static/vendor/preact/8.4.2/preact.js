@@ -1,6 +1,5 @@
 !function() {
     'use strict';
-    function VNode() {}
     function h(nodeName, attributes) {
         var lastSimple, child, simple, i, children = EMPTY_CHILDREN;
         for (i = arguments.length; i-- > 2; ) stack.push(arguments[i]);
@@ -26,6 +25,9 @@
         for (var i in props) obj[i] = props[i];
         return obj;
     }
+    function applyRef(ref, value) {
+        if (null != ref) if ('function' == typeof ref) ref(value); else ref.current = value;
+    }
     function cloneElement(vnode, props) {
         return h(vnode.nodeName, extend(extend({}, vnode.attributes), props), arguments.length > 2 ? [].slice.call(arguments, 2) : vnode.children);
     }
@@ -33,9 +35,8 @@
         if (!component.__d && (component.__d = !0) && 1 == items.push(component)) (options.debounceRendering || defer)(rerender);
     }
     function rerender() {
-        var p, list = items;
-        items = [];
-        while (p = list.pop()) if (p.__d) renderComponent(p);
+        var p;
+        while (p = items.pop()) if (p.__d) renderComponent(p);
     }
     function isSameNodeType(node, vnode, hydrating) {
         if ('string' == typeof vnode || 'number' == typeof vnode) return void 0 !== node.splitText;
@@ -63,8 +64,8 @@
     function setAccessor(node, name, old, value, isSvg) {
         if ('className' === name) name = 'class';
         if ('key' === name) ; else if ('ref' === name) {
-            if (old) old(null);
-            if (value) value(node);
+            applyRef(old, null);
+            applyRef(value, node);
         } else if ('class' === name && !isSvg) node.className = value || ''; else if ('style' === name) {
             if (!value || 'string' == typeof value || 'string' == typeof old) node.style.cssText = value || '';
             if (value && 'object' == typeof value) {
@@ -81,24 +82,21 @@
             } else node.removeEventListener(name, eventProxy, useCapture);
             (node.__l || (node.__l = {}))[name] = value;
         } else if ('list' !== name && 'type' !== name && !isSvg && name in node) {
-            setProperty(node, name, null == value ? '' : value);
-            if (null == value || !1 === value) node.removeAttribute(name);
+            try {
+                node[name] = null == value ? '' : value;
+            } catch (e) {}
+            if ((null == value || !1 === value) && 'spellcheck' != name) node.removeAttribute(name);
         } else {
             var ns = isSvg && name !== (name = name.replace(/^xlink:?/, ''));
             if (null == value || !1 === value) if (ns) node.removeAttributeNS('http://www.w3.org/1999/xlink', name.toLowerCase()); else node.removeAttribute(name); else if ('function' != typeof value) if (ns) node.setAttributeNS('http://www.w3.org/1999/xlink', name.toLowerCase(), value); else node.setAttribute(name, value);
         }
-    }
-    function setProperty(node, name, value) {
-        try {
-            node[name] = value;
-        } catch (e) {}
     }
     function eventProxy(e) {
         return this.__l[e.type](options.event && options.event(e) || e);
     }
     function flushMounts() {
         var c;
-        while (c = mounts.pop()) {
+        while (c = mounts.shift()) {
             if (options.afterMount) options.afterMount(c);
             if (c.componentDidMount) c.componentDidMount();
         }
@@ -175,7 +173,7 @@
                     keyed[key] = void 0;
                     keyedLen--;
                 }
-            } else if (!child && min < childrenLen) for (j = min; j < childrenLen; j++) if (void 0 !== children[j] && isSameNodeType(c = children[j], vchild, isHydrating)) {
+            } else if (min < childrenLen) for (j = min; j < childrenLen; j++) if (void 0 !== children[j] && isSameNodeType(c = children[j], vchild, isHydrating)) {
                 child = c;
                 children[j] = void 0;
                 if (j === childrenLen - 1) childrenLen--;
@@ -192,7 +190,7 @@
     function recollectNodeTree(node, unmountOnly) {
         var component = node._component;
         if (component) unmountComponent(component); else {
-            if (null != node.__preactattr_ && node.__preactattr_.ref) node.__preactattr_.ref(null);
+            if (null != node.__preactattr_) applyRef(node.__preactattr_.ref, null);
             if (!1 === unmountOnly || null == node.__preactattr_) removeNode(node);
             removeChildren(node);
         }
@@ -210,12 +208,8 @@
         for (name in old) if ((!attrs || null == attrs[name]) && null != old[name]) setAccessor(dom, name, old[name], old[name] = void 0, isSvgMode);
         for (name in attrs) if (!('children' === name || 'innerHTML' === name || name in old && attrs[name] === ('value' === name || 'checked' === name ? dom[name] : old[name]))) setAccessor(dom, name, old[name], old[name] = attrs[name], isSvgMode);
     }
-    function collectComponent(component) {
-        var name = component.constructor.name;
-        (components[name] || (components[name] = [])).push(component);
-    }
     function createComponent(Ctor, props, context) {
-        var inst, list = components[Ctor.name];
+        var inst, i = recyclerComponents.length;
         if (Ctor.prototype && Ctor.prototype.render) {
             inst = new Ctor(props, context);
             Component.call(inst, props, context);
@@ -224,22 +218,24 @@
             inst.constructor = Ctor;
             inst.render = doRender;
         }
-        if (list) for (var i = list.length; i--; ) if (list[i].constructor === Ctor) {
-            inst.__b = list[i].__b;
-            list.splice(i, 1);
-            break;
+        while (i--) if (recyclerComponents[i].constructor === Ctor) {
+            inst.__b = recyclerComponents[i].__b;
+            recyclerComponents.splice(i, 1);
+            return inst;
         }
         return inst;
     }
     function doRender(props, state, context) {
         return this.constructor(props, context);
     }
-    function setComponentProps(component, props, opts, context, mountAll) {
+    function setComponentProps(component, props, renderMode, context, mountAll) {
         if (!component.__x) {
             component.__x = !0;
-            if (component.__r = props.ref) delete props.ref;
-            if (component.__k = props.key) delete props.key;
-            if (!component.base || mountAll) {
+            component.__r = props.ref;
+            component.__k = props.key;
+            delete props.ref;
+            delete props.key;
+            if (void 0 === component.constructor.getDerivedStateFromProps) if (!component.base || mountAll) {
                 if (component.componentWillMount) component.componentWillMount();
             } else if (component.componentWillReceiveProps) component.componentWillReceiveProps(props, context);
             if (context && context !== component.context) {
@@ -249,18 +245,22 @@
             if (!component.__p) component.__p = component.props;
             component.props = props;
             component.__x = !1;
-            if (0 !== opts) if (1 === opts || !1 !== options.syncComponentUpdates || !component.base) renderComponent(component, 1, mountAll); else enqueueRender(component);
-            if (component.__r) component.__r(component);
+            if (0 !== renderMode) if (1 === renderMode || !1 !== options.syncComponentUpdates || !component.base) renderComponent(component, 1, mountAll); else enqueueRender(component);
+            applyRef(component.__r, component);
         }
     }
-    function renderComponent(component, opts, mountAll, isChild) {
+    function renderComponent(component, renderMode, mountAll, isChild) {
         if (!component.__x) {
-            var rendered, inst, cbase, props = component.props, state = component.state, context = component.context, previousProps = component.__p || props, previousState = component.__s || state, previousContext = component.__c || context, isUpdate = component.base, nextBase = component.__b, initialBase = isUpdate || nextBase, initialChildComponent = component._component, skip = !1;
+            var rendered, inst, cbase, props = component.props, state = component.state, context = component.context, previousProps = component.__p || props, previousState = component.__s || state, previousContext = component.__c || context, isUpdate = component.base, nextBase = component.__b, initialBase = isUpdate || nextBase, initialChildComponent = component._component, skip = !1, snapshot = previousContext;
+            if (component.constructor.getDerivedStateFromProps) {
+                state = extend(extend({}, state), component.constructor.getDerivedStateFromProps(props, state));
+                component.state = state;
+            }
             if (isUpdate) {
                 component.props = previousProps;
                 component.state = previousState;
                 component.context = previousContext;
-                if (2 !== opts && component.shouldComponentUpdate && !1 === component.shouldComponentUpdate(props, state, context)) skip = !0; else if (component.componentWillUpdate) component.componentWillUpdate(props, state, context);
+                if (2 !== renderMode && component.shouldComponentUpdate && !1 === component.shouldComponentUpdate(props, state, context)) skip = !0; else if (component.componentWillUpdate) component.componentWillUpdate(props, state, context);
                 component.props = props;
                 component.state = state;
                 component.context = context;
@@ -270,6 +270,7 @@
             if (!skip) {
                 rendered = component.render(props, state, context);
                 if (component.getChildContext) context = extend(extend({}, context), component.getChildContext());
+                if (isUpdate && component.getSnapshotBeforeUpdate) snapshot = component.getSnapshotBeforeUpdate(previousProps, previousState);
                 var toUnmount, base, childComponent = rendered && rendered.nodeName;
                 if ('function' == typeof childComponent) {
                     var childProps = getNodeProps(rendered);
@@ -287,7 +288,7 @@
                     cbase = initialBase;
                     toUnmount = initialChildComponent;
                     if (toUnmount) cbase = component._component = null;
-                    if (initialBase || 1 === opts) {
+                    if (initialBase || 1 === renderMode) {
                         if (cbase) cbase._component = null;
                         base = diff(cbase, rendered, context, mountAll || !isUpdate, initialBase && initialBase.parentNode, !0);
                     }
@@ -311,11 +312,11 @@
                     base._componentConstructor = componentRef.constructor;
                 }
             }
-            if (!isUpdate || mountAll) mounts.unshift(component); else if (!skip) {
-                if (component.componentDidUpdate) component.componentDidUpdate(previousProps, previousState, previousContext);
+            if (!isUpdate || mountAll) mounts.push(component); else if (!skip) {
+                if (component.componentDidUpdate) component.componentDidUpdate(previousProps, previousState, snapshot);
                 if (options.afterUpdate) options.afterUpdate(component);
             }
-            if (null != component.__h) while (component.__h.length) component.__h.pop().call(component);
+            while (component.__h.length) component.__h.pop().call(component);
             if (!diffLevel && !isChild) flushMounts();
         }
     }
@@ -352,23 +353,28 @@
         component.base = null;
         var inner = component._component;
         if (inner) unmountComponent(inner); else if (base) {
-            if (base.__preactattr_ && base.__preactattr_.ref) base.__preactattr_.ref(null);
+            if (null != base.__preactattr_) applyRef(base.__preactattr_.ref, null);
             component.__b = base;
             removeNode(base);
-            collectComponent(component);
+            recyclerComponents.push(component);
             removeChildren(base);
         }
-        if (component.__r) component.__r(null);
+        applyRef(component.__r, null);
     }
     function Component(props, context) {
         this.__d = !0;
         this.context = context;
         this.props = props;
         this.state = this.state || {};
+        this.__h = [];
     }
     function render(vnode, parent, merge) {
         return diff(merge, vnode, {}, !1, parent, !1);
     }
+    function createRef() {
+        return {};
+    }
+    var VNode = function() {};
     var options = {};
     var stack = [];
     var EMPTY_CHILDREN = [];
@@ -379,17 +385,16 @@
     var diffLevel = 0;
     var isSvgMode = !1;
     var hydrating = !1;
-    var components = {};
+    var recyclerComponents = [];
     extend(Component.prototype, {
         setState: function(state, callback) {
-            var s = this.state;
-            if (!this.__s) this.__s = extend({}, s);
-            extend(s, 'function' == typeof state ? state(s, this.props) : state);
-            if (callback) (this.__h = this.__h || []).push(callback);
+            if (!this.__s) this.__s = this.state;
+            this.state = extend(extend({}, this.state), 'function' == typeof state ? state(this.state, this.props) : state);
+            if (callback) this.__h.push(callback);
             enqueueRender(this);
         },
         forceUpdate: function(callback) {
-            if (callback) (this.__h = this.__h || []).push(callback);
+            if (callback) this.__h.push(callback);
             renderComponent(this, 2);
         },
         render: function() {}
@@ -398,6 +403,7 @@
         h: h,
         createElement: h,
         cloneElement: cloneElement,
+        createRef: createRef,
         Component: Component,
         render: render,
         rerender: rerender,

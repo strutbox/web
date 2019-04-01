@@ -1,4 +1,4 @@
-FROM python:3.7.2-alpine3.8
+FROM python:3.7.3-alpine3.8
 
 RUN addgroup -S strut && adduser -S -G strut strut
 

@@ -57,7 +57,7 @@ class ResponseFile:
 
     def get_response(self, request):
         # Handle 304 response
-        if_modified_since = request.META.get("HTTP_IF_MODIFIED_SINCE")
+        if_modified_since = request.headers.get("If-Modified-Since")
         if if_modified_since and self.mtime == if_modified_since:
             return HttpResponseNotModified()
 

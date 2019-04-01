@@ -7,7 +7,7 @@ class ProxyFix:
         # but in reality, this value is being set explicitly
         # by our frontend proxies.
         try:
-            request.META["REMOTE_ADDR"] = request.META["HTTP_X_FORWARDED_FOR"].split(
+            request.META["REMOTE_ADDR"] = request.headers["X-Forwarded-For"].split(
                 ",", 1
             )[0]
         except KeyError:

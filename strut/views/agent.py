@@ -44,7 +44,7 @@ class UserAgent:
 class AgentView(View):
     def dispatch(self, request):
         try:
-            self.user_agent = UserAgent.parse(request.META["HTTP_USER_AGENT"])
+            self.user_agent = UserAgent.parse(request.headers["User-Agent"])
         except KeyError:
             return JsonResponse({"error": "Missing User-Agent header"}, status=400)
         except InvalidUserAgent:
@@ -103,7 +103,7 @@ class Bootstrap(AgentView):
 
 class Firmware(AgentView):
     def get(self, request):
-        if "application/json" not in request.META.get("HTTP_ACCEPT"):
+        if "application/json" not in request.headers.get("Accept"):
             return HttpResponse(status=400)
         channel = int(request.META.get("channel", FirmwareVersion.Channel.Device))
 

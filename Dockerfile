@@ -22,6 +22,7 @@ COPY . /usr/src/strut
 RUN set -ex; \
     \
     apk add --no-cache --virtual .build-deps \
+        curl \
         g++ \
         gcc \
         libffi-dev \
@@ -30,18 +31,12 @@ RUN set -ex; \
         postgresql-dev \
     ; \
     \
-    export PIPENV_CACHE_DIR="$(mktemp -d)"; \
-    pip install --upgrade pip==19.0.3; \
-    pip install pipenv==2018.11.26; \
-    pipenv install --deploy --system; \
+    curl -sSL https://raw.githubusercontent.com/sdispater/poetry/0.12.15/get-poetry.py | python; \
+    ~/.poetry/bin/poetry config settings.virtualenvs.create false; \
+    ~/.poetry/bin/poetry install --no-dev; \
+    rm -r ~/.poetry ~/.config; \
     \
     apk del .build-deps; \
-    pip uninstall --yes \
-        pipenv \
-        virtualenv \
-        virtualenv-clone \
-    ; \
-    rm -r "$PIPENV_CACHE_DIR"; \
     \
     apk add --no-cache --virtual .run-deps \
         libffi \

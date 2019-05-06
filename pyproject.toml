@@ -11,3 +11,53 @@ exclude = '''
   | migrations
 )/
 '''
+
+[tool.poetry]
+name = "strut"
+version = "1.0.0.dev0"
+authors = ["Matt Robenolt <matt@ydekproductions.com>"]
+
+[tool.poetry.dependencies]
+python = "~3.7"
+
+Django = "~2.2"
+channels = "*"
+click = "*"
+cryptography = "*"
+daphne = "*"
+dj-database-url = "*"
+google-cloud-storage = "*"
+hiredis = "*"
+jsonschema = "^2.6"
+marshmallow = "~3.0.0rc6"
+msgpack = "~0.6"
+petname = "*"
+psycopg2-binary = "*"
+python-rapidjson = "*"
+redis = "*"
+requests = "*"
+rq = "<1.0"
+social-auth-app-django = "~2.1"
+structlog = "*"
+pyuwsgi = "~2.0.18"
+websockets = "*"
+youtube_dl = "*"
+channels-redis = "*"
+raven = "*"
+
+[tool.poetry.dev-dependencies]
+invoke = "*"
+ipython = "*"
+isort = "*"
+black = "=19.3b0"
+flake8 = "*"
+pytest = "*"
+pytest-django = "*"
+pytest-xdist = "*"
+
+[tool.poetry.scripts]
+strut = "strut.cli:main"
+
+[build-system]
+requires = ["poetry>=0.12", "pip==19.0.3"]
+build-backend = "poetry.masonry.api"

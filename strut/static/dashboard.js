@@ -80,24 +80,10 @@ class AddSongModal extends Component {
     });
   }
 
-  setURL(e) {
+  setValue(e) {
     this.setState({
       value: e.target.value,
     });
-  }
-
-  setYoutubeURL(e) {
-    this.setState({
-      source: SongMetaSources.YouTube,
-      value: e.target.value,
-    });
-  }
-
-  setSoundcloudURL(e) {
-    this.setState({
-      source: SongMetaSources.Soundcloud,
-      value: e.target.value,
-    })
   }
 
   setStart(e) {
@@ -325,7 +311,7 @@ class AddSongModal extends Component {
       value: this.state.value,
       prompt: 'YouTube URL',
       placeholder: 'https://www.youtube.com/watch?v=6YMPAH67f4o',
-      onChange: this.setYoutubeURL.bind(this),
+      onChange: this.setValue.bind(this),
     });
   }
 
@@ -334,7 +320,7 @@ class AddSongModal extends Component {
       value: this.state.value,
       prompt: 'Soundcloud URL',
       placeholder: 'https://soundcloud.com/relentlessmc/i-stay-fxcked-up',
-      onChange: this.setSoundcloudURL.bind(this),
+      onChange: this.setValue.bind(this),
     });
   }
 

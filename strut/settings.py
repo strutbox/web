@@ -187,4 +187,4 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_SECONDS = 31_536_000
 
-CSP_HEADER = f"script-src 'self'; style-src 'self'; img-src 'self' https://img.youtube.com; media-src https://{GOOGLE_STORAGE_BUCKET}.storage.googleapis.com; font-src 'self'; connect-src 'self'"
+CSP_HEADER = f"script-src 'self'; style-src 'self'; img-src 'self' https://img.youtube.com https://*.sndcdn.com; media-src https://{GOOGLE_STORAGE_BUCKET}.storage.googleapis.com; font-src 'self'; connect-src 'self'"

@@ -11,6 +11,7 @@ from django.db.models.functions import Concat
 from django.utils import timezone
 
 from strut.db.models import Model, sane_repr
+from strut.mediaresolvers.soundcloud import SoundcloudResolver
 from strut.mediaresolvers.youtube import YouTubeResolver
 
 
@@ -18,6 +19,7 @@ class SongMeta(Model):
     @enum.unique
     class Source(enum.IntEnum):
         YouTube = 0
+        Soundcloud = 1
 
     class DataUnsynced(Exception):
         pass
@@ -37,9 +39,14 @@ class SongMeta(Model):
 
     @property
     def resolver(self):
-        if self.source == SongMeta.Source.YouTube:
-            return YouTubeResolver(self)
-        raise NotImplementedError
+        try:
+            resolver = {
+                SongMeta.Source.YouTube: YouTubeResolver,
+                SongMeta.Source.Soundcloud: SoundcloudResolver,
+            }[self.source]
+        except KeyError:
+            raise NotImplementedError
+        return resolver(self)
 
     @property
     def is_complete(self):

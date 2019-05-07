@@ -358,3 +358,8 @@ input:checked + .slider:before {
   height: 20px;
   line-height: 20px;
 }
+
+.btn:disabled {
+  background: #FF00B4;
+  animation: none;
+}

@@ -64,3 +64,12 @@ export const getYoutubeID = (url) => {
   }
   return url[0];
 };
+
+export const getSoundcloudID = (url) => {
+  if (!url) return '';
+  url = url.match(/^https?:\/\/soundcloud\.com\/([^\/]+\/[^\/]+)/);
+  if (url && url.length == 2) {
+    return url[1];
+  }
+  return url;
+}

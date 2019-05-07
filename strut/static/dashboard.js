@@ -1,4 +1,4 @@
-import { Strut, media, api, getYoutubeID, chop } from './utils.js';
+import { Strut, media, api, getYoutubeID, getSoundcloudID, chop } from './utils.js';
 import { Song, MiniSong, Playlist, TextInput, UserSidebar } from './components.js';
 
 const { preact } = window;
@@ -59,21 +59,45 @@ class Jobs extends Component {
   }
 }
 
+const SongMetaSources = {
+  YouTube: 0,
+  Soundcloud: 1,
+};
+
 class AddSongModal extends Component {
   constructor() {
     super();
     this.state = {
-      source: 0,
+      source: SongMetaSources.YouTube,
       step: 0,
       isLoading: false,
     };
   }
 
+  setSource(source, e) {
+    this.setState({
+      source: source,
+    });
+  }
+
+  setURL(e) {
+    this.setState({
+      value: e.target.value,
+    });
+  }
+
   setYoutubeURL(e) {
     this.setState({
-      source: 0,
-      youtubeURL: e.target.value,
+      source: SongMetaSources.YouTube,
+      value: e.target.value,
     });
+  }
+
+  setSoundcloudURL(e) {
+    this.setState({
+      source: SongMetaSources.Soundcloud,
+      value: e.target.value,
+    })
   }
 
   setStart(e) {
@@ -139,8 +163,12 @@ class AddSongModal extends Component {
 
   lookupMeta() {
     this.setState({ isLoading: true });
-    const { source, youtubeURL } = this.state;
-    const identifier = getYoutubeID(youtubeURL);
+    const { source, value } = this.state;
+    const extractor = {
+      [SongMetaSources.YouTube]: getYoutubeID,
+      [SongMetaSources.Soundcloud]: getSoundcloudID,
+    }[source];
+    const identifier = extractor(value);
 
     api('songmeta', {
       query: {
@@ -259,28 +287,55 @@ class AddSongModal extends Component {
   }
 
   renderURLForm() {
-    const { error } = this.state;
+    const { source, error } = this.state;
+
+    const form = {
+      [SongMetaSources.YouTube]: this.renderYoutubeURLForm.bind(this),
+      [SongMetaSources.Soundcloud]: this.renderSoundcloudURLForm.bind(this),
+    }[source]();
 
     return (
       h('div', {},
         h('div', {class: 'modal-body'},
           ( error ? h('h3', {}, error) : null ),
-          h('div', {class: 'row field'},
-            h('div', {class: 'column'}, 'YouTube URL:'),
-            h('div', {class: 'column'},
-              h(TextInput, {
-                value: this.state.youtubeURL,
-                onChange: this.setYoutubeURL.bind(this),
-                placeholder: 'https://www.youtube.com/watch?v=6YMPAH67f4o',
-              }),
-            ),
-          )
+          h('div', {class: 'row field', style: 'margin-left: 10px'},
+            h('button', {
+              class: 'btn',
+              disabled: source == SongMetaSources.YouTube,
+              onClick: this.setSource.bind(this, SongMetaSources.YouTube),
+            }, 'YouTube'),
+            h('div', {style: 'width: 20px'}),
+            h('button', {
+              class: 'btn',
+              disabled: source == SongMetaSources.Soundcloud,
+              onClick: this.setSource.bind(this, SongMetaSources.Soundcloud),
+            }, 'Soundcloud'),
+          ),
+          form
         ),
         h('div', {class: 'modal-footer'},
           h('button', {class: 'btn pull-right', onClick: this.lookupMeta.bind(this)}, 'Lookup')
         )
       )
     );
+  }
+
+  renderYoutubeURLForm() {
+    return h(URLForm, {
+      value: this.state.value,
+      prompt: 'YouTube URL',
+      placeholder: 'https://www.youtube.com/watch?v=6YMPAH67f4o',
+      onChange: this.setYoutubeURL.bind(this),
+    });
+  }
+
+  renderSoundcloudURLForm() {
+    return h(URLForm, {
+      value: this.state.value,
+      prompt: 'Soundcloud URL',
+      placeholder: 'https://soundcloud.com/relentlessmc/i-stay-fxcked-up',
+      onChange: this.setSoundcloudURL.bind(this),
+    });
   }
 
   render() {
@@ -293,6 +348,23 @@ class AddSongModal extends Component {
           ),
           ( isLoading ? this.renderLoading() : this.renderStep() )
         )
+      )
+    )
+  }
+}
+
+class URLForm extends Component {
+  render() {
+    return (
+      h('div', {class: 'row field'},
+        h('div', {class: 'column'}, `${this.props.prompt}:`),
+        h('div', {class: 'column'},
+          h(TextInput, {
+            value: this.props.value,
+            onChange: this.props.onChange,
+            placeholder: this.props.placeholder,
+          }),
+        ),
       )
     )
   }

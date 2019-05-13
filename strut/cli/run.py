@@ -4,7 +4,7 @@ from typing import Tuple
 import click
 
 
-@dataclass
+@dataclass(frozen=True)
 class AddressType:
     ipv4: Tuple[str, int]
     fd: int

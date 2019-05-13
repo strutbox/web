@@ -24,7 +24,7 @@ class InvalidUserAgent(ValueError):
     pass
 
 
-@dataclass
+@dataclass(frozen=True)
 class UserAgent:
     version: str
     serial: str

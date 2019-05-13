@@ -30,7 +30,7 @@ CORS_TYPES = {
 }
 
 
-@dataclass
+@dataclass(frozen=True)
 class NonClosingFile:
     fp: BinaryIO
 
@@ -47,7 +47,7 @@ class NonClosingFile:
         return iter(self.fp)
 
 
-@dataclass
+@dataclass(frozen=True)
 class ResponseFile:
     fp: NonClosingFile
     content_type: str
@@ -73,7 +73,7 @@ class ResponseFile:
         return response
 
 
-@dataclass
+@dataclass(frozen=True)
 class FileNotFoundFile:
     path: str
 
@@ -83,7 +83,7 @@ class FileNotFoundFile:
         )
 
 
-@dataclass
+@dataclass(frozen=True)
 class DirectoryResponseFile:
     def get_response(self, request):
         return HttpResponseNotFound(

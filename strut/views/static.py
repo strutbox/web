@@ -101,7 +101,7 @@ def open_fp(path):
     try:
         fp = open(absolute_path, "rb")
     except IsADirectoryError:
-        return DirectoryResponseFile
+        return DirectoryResponseFile()
 
     mtime = http_date(int(os.path.getmtime(absolute_path)))
     content_length = os.path.getsize(absolute_path)

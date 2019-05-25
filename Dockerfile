@@ -31,7 +31,8 @@ RUN set -ex; \
         postgresql-dev \
     ; \
     \
-    curl -sSL https://raw.githubusercontent.com/sdispater/poetry/0.12.15/get-poetry.py | python; \
+    export POETRY_VERSION=0.12.16; \
+    curl -sSL https://raw.githubusercontent.com/sdispater/poetry/$POETRY_VERSION/get-poetry.py | python; \
     ~/.poetry/bin/poetry config settings.virtualenvs.create false; \
     ~/.poetry/bin/poetry install --no-dev; \
     rm -r ~/.poetry ~/.config; \

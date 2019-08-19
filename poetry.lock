@@ -1050,7 +1050,7 @@ version = "4.6.0"
 setuptools = "*"
 
 [metadata]
-content-hash = "98fd7bc91e2e4bf497e5d5024b480975ec504084336ad387b51e4dd0a36f3cfd"
+content-hash = "9a6bd1f3acdbe9f94c136edb522912b64177364a658afe64e1f1f2049bd6a223"
 python-versions = "~3.7"
 
 [metadata.hashes]

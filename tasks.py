@@ -249,7 +249,7 @@ def neverupgrade(ctx):
         df[0] = f"FROM python:{str(v)}-alpine3.10"
         fp.write("\n".join(df) + "\n")
 
-    ctx.run("poetry update")
+    ctx.run("~/.poetry/bin/poetry update")
     ctx.run("git diff")
     ctx.run("git commit -am '#neverupgrade'")
     ctx.run("git push")

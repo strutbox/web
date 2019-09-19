@@ -61,5 +61,5 @@ pytest-xdist = "*"
 strut = "strut.cli:main"
 
 [build-system]
-requires = ["poetry==1.0.0b1", "pip==19.2.2"]
+requires = ["poetry==1.0.0b1", "pip==19.2.3"]
 build-backend = "poetry.masonry.api"

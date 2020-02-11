@@ -43,9 +43,6 @@ optional = false
 python-versions = "*"
 version = "3.2.2"
 
-[package.extras]
-tests = ["pytest (>=4.3.0,<4.4.0)", "pytest-asyncio (>=0.10.0,<0.11.0)"]
-
 [[package]]
 category = "main"
 description = "Fast ASN.1 parser and serializer with definitions for private keys, public keys, certificates, CRL, OCSP, CMS, PKCS#3, PKCS#7, PKCS#8, PKCS#12, PKCS#5, X.509 and TSP"
@@ -78,11 +75,6 @@ optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 version = "19.1.0"
 
-[package.extras]
-dev = ["coverage", "hypothesis", "pympler", "pytest", "six", "zope.interface", "sphinx", "pre-commit"]
-docs = ["sphinx", "zope.interface"]
-tests = ["coverage", "hypothesis", "pympler", "pytest", "six", "zope.interface"]
-
 [[package]]
 category = "main"
 description = "WebSocket client & server library, WAMP real-time framework"
@@ -96,18 +88,6 @@ cryptography = ">=2.7"
 six = ">=1.11.0"
 txaio = ">=18.8.1"
 
-[package.extras]
-accelerate = ["wsaccel (>=0.6.2)"]
-all = ["zope.interface (>=3.6.0)", "Twisted (>=12.1.0)", "wsaccel (>=0.6.2)", "python-snappy (>=0.5)", "lz4 (>=0.7.0)", "msgpack (>=0.6.1)", "ujson (>=1.35)", "cbor2 (>=4.1.2)", "cbor (>=1.0.0)", "py-ubjson (>=0.8.4)", "flatbuffers (>=1.10)", "pyopenssl (>=16.2.0)", "service-identity (>=16.0.0)", "pynacl (>=1.0.1)", "pytrie (>=0.2)", "pyqrcode (>=1.1)", "cffi (>=1.11.5)", "argon2-cffi (>=18.1.0)", "passlib (>=1.7.1)", "cbor2 (>=4.1.1)", "zlmdb (>=19.7.1)", "twisted (>=18.9.0)", "autobahn (>=18.11.2)", "web3 (>=4.8.1)", "py-eth-sig-utils (>=0.3.0)", "ethereum (>=2.3.2)", "eth-abi (>=1.3.0)"]
-compress = ["python-snappy (>=0.5)", "lz4 (>=0.7.0)"]
-dev = ["pep8-naming (>=0.3.3)", "flake8 (>=2.5.1)", "pyflakes (>=1.0.0)", "mock (>=1.3.0)", "pytest (>=2.8.6,<3.3.0)", "twine (>=1.6.5)", "sphinx (>=1.2.3)", "pyenchant (>=1.6.6)", "sphinxcontrib-spelling (>=2.1.2)", "sphinx-rtd-theme (>=0.1.9)", "awscli", "qualname", "passlib", "wheel", "pytest-asyncio (<0.6)", "pytest-aiohttp"]
-encryption = ["pyopenssl (>=16.2.0)", "service-identity (>=16.0.0)", "pynacl (>=1.0.1)", "pytrie (>=0.2)", "pyqrcode (>=1.1)"]
-nvx = ["cffi (>=1.11.5)"]
-scram = ["cffi (>=1.11.5)", "argon2-cffi (>=18.1.0)", "passlib (>=1.7.1)"]
-serialization = ["msgpack (>=0.6.1)", "ujson (>=1.35)", "cbor2 (>=4.1.2)", "cbor (>=1.0.0)", "py-ubjson (>=0.8.4)", "flatbuffers (>=1.10)"]
-twisted = ["zope.interface (>=3.6.0)", "Twisted (>=12.1.0)"]
-xbr = ["cbor2 (>=4.1.1)", "zlmdb (>=19.7.1)", "twisted (>=18.9.0)", "autobahn (>=18.11.2)", "web3 (>=4.8.1)", "py-eth-sig-utils (>=0.3.0)", "ethereum (>=2.3.2)", "eth-abi (>=1.3.0)"]
-
 [[package]]
 category = "main"
 description = "Self-service finite-state machines for the programmer on the go."
@@ -119,9 +99,6 @@ version = "0.7.0"
 [package.dependencies]
 attrs = ">=16.1.0"
 six = "*"
-
-[package.extras]
-visualize = ["graphviz (>0.5.1)", "Twisted (>=16.1.1)"]
 
 [[package]]
 category = "dev"
@@ -144,9 +121,6 @@ appdirs = "*"
 attrs = ">=18.1.0"
 click = ">=6.5"
 toml = ">=0.9.4"
-
-[package.extras]
-d = ["aiohttp (>=3.3.2)", "aiohttp-cors"]
 
 [[package]]
 category = "main"
@@ -188,9 +162,6 @@ Django = ">=1.11"
 asgiref = ">=3.0,<4.0"
 daphne = ">=2.3,<3.0"
 
-[package.extras]
-tests = ["pytest (>=4.4,<5.0)", "pytest-django (>=3.4,<4.0)", "pytest-asyncio (>=0.10,<1.0)", "async-generator (>=1.10,<2.0)", "async-timeout (>=3.0,<4.0)", "coverage (>=4.5,<5.0)"]
-
 [[package]]
 category = "main"
 description = "Redis-backed ASGI channel layer implementation"
@@ -204,10 +175,6 @@ aioredis = ">=1.0,<2.0"
 asgiref = ">=3.0,<4.0"
 channels = ">=2.2,<3.0"
 msgpack = ">=0.6.0,<0.7.0"
-
-[package.extras]
-cryptography = ["cryptography (>=1.3.0)"]
-tests = ["cryptography (>=1.3.0)", "pytest (>=3.6.0,<3.7.0)", "pytest-asyncio (>=0.8,<1.0)", "async-generator (>=1.8,<2.0)", "async-timeout (>=2.0,<3.0)"]
 
 [[package]]
 category = "main"
@@ -255,13 +222,6 @@ asn1crypto = ">=0.21.0"
 cffi = ">=1.8,<1.11.3 || >1.11.3"
 six = ">=1.4.1"
 
-[package.extras]
-docs = ["sphinx (>=1.6.5,<1.8.0 || >1.8.0)", "sphinx-rtd-theme"]
-docstest = ["doc8", "pyenchant (>=1.6.11)", "twine (>=1.12.0)", "sphinxcontrib-spelling (>=4.0.1)"]
-idna = ["idna (>=2.1)"]
-pep8test = ["flake8", "flake8-import-order", "pep8-naming"]
-test = ["pytest (>=3.6.0,<3.9.0 || >3.9.0,<3.9.1 || >3.9.1,<3.9.2 || >3.9.2)", "pretend", "iso8601", "pytz", "hypothesis (>=1.11.4,<3.79.2 || >3.79.2)"]
-
 [[package]]
 category = "main"
 description = "Django ASGI (HTTP/WebSocket) server"
@@ -274,9 +234,6 @@ version = "2.3.0"
 asgiref = ">=3.0,<4.0"
 autobahn = ">=0.18"
 twisted = ">=18.7"
-
-[package.extras]
-tests = ["hypothesis (>=3.88,<4.0)", "pytest (>=3.10,<4.0)", "pytest-asyncio (>=0.8,<1.0)"]
 
 [[package]]
 category = "dev"
@@ -309,15 +266,11 @@ description = "A high-level Python Web framework that encourages rapid developme
 name = "django"
 optional = false
 python-versions = ">=3.5"
-version = "2.2.5"
+version = "2.2.10"
 
 [package.dependencies]
 pytz = "*"
 sqlparse = "*"
-
-[package.extras]
-argon2 = ["argon2-cffi (>=16.1.0)"]
-bcrypt = ["bcrypt"]
 
 [[package]]
 category = "dev"
@@ -337,9 +290,6 @@ version = "1.7.1"
 
 [package.dependencies]
 apipkg = ">=1.4"
-
-[package.extras]
-testing = ["pre-commit"]
 
 [[package]]
 category = "dev"
@@ -372,11 +322,6 @@ requests = ">=2.18.0,<3.0.0dev"
 setuptools = ">=34.0.0"
 six = ">=1.10.0"
 
-[package.extras]
-grpc = ["grpcio (>=1.8.2,<2.0dev)"]
-grpcgcp = ["grpcio-gcp (>=0.2.2)"]
-grpcio-gcp = ["grpcio-gcp (>=0.2.2)"]
-
 [[package]]
 category = "main"
 description = "Google Authentication Library"
@@ -402,9 +347,6 @@ version = "1.0.3"
 [package.dependencies]
 google-api-core = ">=1.14.0,<2.0.0dev"
 
-[package.extras]
-grpc = ["grpcio (>=1.8.2,<2.0dev)"]
-
 [[package]]
 category = "main"
 description = "Google Cloud Storage API client library"
@@ -429,9 +371,6 @@ version = "0.4.1"
 [package.dependencies]
 six = "*"
 
-[package.extras]
-requests = ["requests (>=2.18.0,<3.0.0dev)"]
-
 [[package]]
 category = "main"
 description = "Common protobufs used in Google APIs"
@@ -442,9 +381,6 @@ version = "1.6.0"
 
 [package.dependencies]
 protobuf = ">=3.6.0"
-
-[package.extras]
-grpc = ["grpcio (>=1.0.0)"]
 
 [[package]]
 category = "main"
@@ -485,10 +421,6 @@ version = "0.23"
 [package.dependencies]
 zipp = ">=0.5"
 
-[package.extras]
-docs = ["sphinx", "rst.linker"]
-testing = ["packaging", "importlib-resources"]
-
 [[package]]
 category = "main"
 description = ""
@@ -496,9 +428,6 @@ name = "incremental"
 optional = false
 python-versions = "*"
 version = "17.5.0"
-
-[package.extras]
-scripts = ["click (>=6.0)", "twisted (>=16.4.0)"]
 
 [[package]]
 category = "dev"
@@ -529,17 +458,6 @@ pygments = "*"
 setuptools = ">=18.5"
 traitlets = ">=4.2"
 
-[package.extras]
-all = ["nbconvert", "notebook", "ipywidgets", "testpath", "qtconsole", "ipyparallel", "nose (>=0.10.1)", "nbformat", "ipykernel", "pygments", "requests", "numpy", "Sphinx (>=1.3)"]
-doc = ["Sphinx (>=1.3)"]
-kernel = ["ipykernel"]
-nbconvert = ["nbconvert"]
-nbformat = ["nbformat"]
-notebook = ["notebook", "ipywidgets"]
-parallel = ["ipyparallel"]
-qtconsole = ["qtconsole"]
-test = ["nose (>=0.10.1)", "requests", "testpath", "pygments", "nbformat", "ipykernel", "numpy"]
-
 [[package]]
 category = "dev"
 description = "Vestigial utilities from IPython"
@@ -556,12 +474,6 @@ optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 version = "4.3.21"
 
-[package.extras]
-pipfile = ["pipreqs", "requirementslib"]
-pyproject = ["toml"]
-requirements = ["pipreqs", "pip-api"]
-xdg_home = ["appdirs (>=1.4.0)"]
-
 [[package]]
 category = "dev"
 description = "An autocompletion tool for Python that can be used for text editors."
@@ -573,9 +485,6 @@ version = "0.15.1"
 [package.dependencies]
 parso = ">=0.5.0"
 
-[package.extras]
-testing = ["colorama", "docopt", "pytest (>=3.1.0,<5.0.0)"]
-
 [[package]]
 category = "main"
 description = "An implementation of JSON Schema validation for Python"
@@ -584,9 +493,6 @@ optional = false
 python-versions = "*"
 version = "2.6.0"
 
-[package.extras]
-format = ["rfc3987", "strict-rfc3339", "webcolors"]
-
 [[package]]
 category = "main"
 description = "A lightweight library for converting complex datatypes to and from native Python datatypes."
@@ -594,12 +500,6 @@ name = "marshmallow"
 optional = false
 python-versions = ">=3.5"
 version = "3.2.0"
-
-[package.extras]
-dev = ["pytest", "pytz", "simplejson", "mypy (0.720)", "flake8 (3.7.8)", "flake8-bugbear (19.8.0)", "pre-commit (>=1.17,<2.0)", "tox"]
-docs = ["sphinx (2.2.0)", "sphinx-issues (1.2.0)", "alabaster (0.7.12)", "sphinx-version-warning (1.1.2)"]
-lint = ["mypy (0.720)", "flake8 (3.7.8)", "flake8-bugbear (19.8.0)", "pre-commit (>=1.17,<2.0)"]
-tests = ["pytest", "pytz", "simplejson"]
 
 [[package]]
 category = "dev"
@@ -641,11 +541,6 @@ optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 version = "3.1.0"
 
-[package.extras]
-rsa = ["cryptography"]
-signals = ["blinker"]
-signedtoken = ["cryptography", "pyjwt (>=1.0.0)"]
-
 [[package]]
 category = "dev"
 description = "Core utilities for Python packages"
@@ -665,9 +560,6 @@ name = "parso"
 optional = false
 python-versions = "*"
 version = "0.5.1"
-
-[package.extras]
-testing = ["docopt", "pytest (>=3.0.7)"]
 
 [[package]]
 category = "main"
@@ -709,9 +601,6 @@ version = "0.13.0"
 [package.dependencies.importlib-metadata]
 python = "<3.8"
 version = ">=0.12"
-
-[package.extras]
-dev = ["pre-commit", "tox"]
 
 [[package]]
 category = "dev"
@@ -833,11 +722,6 @@ optional = false
 python-versions = "*"
 version = "1.7.1"
 
-[package.extras]
-crypto = ["cryptography (>=1.4)"]
-flake8 = ["flake8", "flake8-import-order", "pep8-naming"]
-test = ["pytest (>=4.0.1,<5.0.0)", "pytest-cov (>=2.6.0,<3.0.0)", "pytest-runner (>=4.2,<5.0.0)"]
-
 [[package]]
 category = "dev"
 description = "Python parsing module"
@@ -868,9 +752,6 @@ wcwidth = "*"
 python = "<3.8"
 version = ">=0.12"
 
-[package.extras]
-testing = ["argcomplete", "hypothesis (>=3.56)", "mock", "nose", "requests", "xmlschema"]
-
 [[package]]
 category = "dev"
 description = "A Django plugin for pytest."
@@ -881,10 +762,6 @@ version = "3.5.1"
 
 [package.dependencies]
 pytest = ">=3.6"
-
-[package.extras]
-docs = ["sphinx", "sphinx-rtd-theme"]
-testing = ["django", "django-configurations (>=2.0)", "six"]
 
 [[package]]
 category = "dev"
@@ -910,9 +787,6 @@ execnet = ">=1.1"
 pytest = ">=4.4.0"
 pytest-forked = "*"
 six = "*"
-
-[package.extras]
-testing = ["filelock"]
 
 [[package]]
 category = "main"
@@ -958,10 +832,6 @@ optional = false
 python-versions = "*"
 version = "6.10.0"
 
-[package.extras]
-flask = ["Flask (>=0.8)", "blinker (>=1.1)"]
-tests = ["bottle", "celery (>=2.5)", "coverage (<4)", "exam (>=0.5.2)", "flake8 (3.5.0)", "logbook", "mock", "nose", "pytz", "pytest (>=3.2.0,<3.3.0)", "pytest-timeout (1.2.1)", "pytest-xdist (1.18.2)", "pytest-pythonpath (0.7.2)", "pytest-cov (2.5.1)", "pytest-flake8 (1.0.0)", "requests", "tornado (>=4.1,<5.0)", "tox", "webob", "webtest", "wheel", "anyjson", "zconfig", "Flask (>=0.8)", "blinker (>=1.1)", "Flask-Login (>=0.2.0)", "blinker (>=1.1)", "sanic (>=0.7.0)", "aiohttp"]
-
 [[package]]
 category = "main"
 description = "Python client for Redis key-value store"
@@ -969,9 +839,6 @@ name = "redis"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 version = "3.3.8"
-
-[package.extras]
-hiredis = ["hiredis (>=0.1.3)"]
 
 [[package]]
 category = "main"
@@ -987,10 +854,6 @@ chardet = ">=3.0.2,<3.1.0"
 idna = ">=2.5,<2.9"
 urllib3 = ">=1.21.1,<1.25.0 || >1.25.0,<1.25.1 || >1.25.1,<1.26"
 
-[package.extras]
-security = ["pyOpenSSL (>=0.14)", "cryptography (>=1.3.4)", "idna (>=2.0.0)"]
-socks = ["PySocks (>=1.5.6,<1.5.7 || >1.5.7)", "win-inet-pton"]
-
 [[package]]
 category = "main"
 description = "OAuthlib authentication support for Requests."
@@ -1002,9 +865,6 @@ version = "1.2.0"
 [package.dependencies]
 oauthlib = ">=3.0.0"
 requests = ">=2.0.0"
-
-[package.extras]
-rsa = ["oauthlib (>=3.0.0)"]
 
 [[package]]
 category = "main"
@@ -1072,14 +932,6 @@ version = ">=0.5.0rc1"
 python = ">=3.0"
 version = ">=3.0.10"
 
-[package.extras]
-all = ["cryptography (>=2.1.1)", "pyjwt (>=1.7.1)", "python-jose (>=3.0.0)", "python-saml (>=2.2.0)", "python3-saml (>=1.2.1)"]
-allpy2 = ["cryptography (>=2.1.1)", "pyjwt (>=1.7.1)", "python-jose (>=3.0.0)", "python-openid (>=2.2.5)", "python-saml (>=2.2.0)", "python3-saml (>=1.2.1)"]
-allpy3 = ["cryptography (>=2.1.1)", "defusedxml (>=0.5.0rc1)", "pyjwt (>=1.7.1)", "python-jose (>=3.0.0)", "python-saml (>=2.2.0)", "python3-openid (>=3.0.10)", "python3-saml (>=1.2.1)"]
-azuread = ["cryptography (>=2.1.1)"]
-openidconnect = ["pyjwt (>=1.7.1)", "python-jose (>=3.0.0)"]
-saml = ["python-saml (>=2.2.0)", "python3-saml (>=1.2.1)"]
-
 [[package]]
 category = "main"
 description = "Non-validating SQL parser"
@@ -1098,11 +950,6 @@ version = "19.1.0"
 
 [package.dependencies]
 six = "*"
-
-[package.extras]
-dev = ["coverage", "freezegun (>=0.2.8)", "pretend", "pytest (>=3.3.0)", "simplejson", "sphinx", "twisted", "pre-commit", "python-rapidjson"]
-docs = ["sphinx", "twisted"]
-tests = ["coverage", "freezegun (>=0.2.8)", "pretend", "pytest (>=3.3.0)", "simplejson", "python-rapidjson"]
 
 [[package]]
 category = "dev"
@@ -1125,9 +972,6 @@ decorator = "*"
 ipython-genutils = "*"
 six = "*"
 
-[package.extras]
-test = ["pytest", "mock"]
-
 [[package]]
 category = "main"
 description = "An asynchronous networking framework written in Python"
@@ -1145,18 +989,6 @@ hyperlink = ">=17.1.1"
 incremental = ">=16.10.1"
 "zope.interface" = ">=4.4.2"
 
-[package.extras]
-all_non_platform = ["pyopenssl (>=16.0.0)", "service_identity (>=18.1.0)", "idna (>=0.6,<2.3 || >2.3)", "pyasn1", "cryptography (>=2.5)", "appdirs (>=1.4.0)", "bcrypt (>=3.0.0)", "soappy", "pyserial (>=3.0)", "h2 (>=3.0,<4.0)", "priority (>=1.1.0,<2.0)"]
-conch = ["pyasn1", "cryptography (>=2.5)", "appdirs (>=1.4.0)", "bcrypt (>=3.0.0)"]
-dev = ["pyflakes (>=1.0.0)", "twisted-dev-tools (>=0.0.2)", "python-subunit", "sphinx (>=1.3.1)", "towncrier (>=17.4.0)"]
-http2 = ["h2 (>=3.0,<4.0)", "priority (>=1.1.0,<2.0)"]
-macos_platform = ["pyobjc-core", "pyobjc-framework-cfnetwork", "pyobjc-framework-cocoa", "pyopenssl (>=16.0.0)", "service_identity (>=18.1.0)", "idna (>=0.6,<2.3 || >2.3)", "pyasn1", "cryptography (>=2.5)", "appdirs (>=1.4.0)", "bcrypt (>=3.0.0)", "soappy", "pyserial (>=3.0)", "h2 (>=3.0,<4.0)", "priority (>=1.1.0,<2.0)"]
-osx_platform = ["pyobjc-core", "pyobjc-framework-cfnetwork", "pyobjc-framework-cocoa", "pyopenssl (>=16.0.0)", "service_identity (>=18.1.0)", "idna (>=0.6,<2.3 || >2.3)", "pyasn1", "cryptography (>=2.5)", "appdirs (>=1.4.0)", "bcrypt (>=3.0.0)", "soappy", "pyserial (>=3.0)", "h2 (>=3.0,<4.0)", "priority (>=1.1.0,<2.0)"]
-serial = ["pyserial (>=3.0)"]
-soap = ["soappy"]
-tls = ["pyopenssl (>=16.0.0)", "service_identity (>=18.1.0)", "idna (>=0.6,<2.3 || >2.3)"]
-windows_platform = ["pywin32", "pyopenssl (>=16.0.0)", "service_identity (>=18.1.0)", "idna (>=0.6,<2.3 || >2.3)", "pyasn1", "cryptography (>=2.5)", "appdirs (>=1.4.0)", "bcrypt (>=3.0.0)", "soappy", "pyserial (>=3.0)", "h2 (>=3.0,<4.0)", "priority (>=1.1.0,<2.0)"]
-
 [[package]]
 category = "main"
 description = "Compatibility API between asyncio/Twisted/Trollius"
@@ -1168,11 +1000,6 @@ version = "18.8.1"
 [package.dependencies]
 six = "*"
 
-[package.extras]
-all = ["zope.interface (>=3.6)", "twisted (>=12.1.0)"]
-dev = ["wheel", "pytest (>=2.6.4)", "pytest-cov (>=1.8.1)", "pep8 (>=1.6.2)", "sphinx (>=1.2.3)", "pyenchant (>=1.6.6)", "sphinxcontrib-spelling (>=2.1.2)", "sphinx-rtd-theme (>=0.1.9)", "tox (>=2.1.1)", "mock (1.3.0)", "twine (>=1.6.5)"]
-twisted = ["zope.interface (>=3.6)", "twisted (>=12.1.0)"]
-
 [[package]]
 category = "main"
 description = "HTTP library with thread-safe connection pooling, file post, and more."
@@ -1180,11 +1007,6 @@ name = "urllib3"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, <4"
 version = "1.25.4"
-
-[package.extras]
-brotli = ["brotlipy (>=0.6.0)"]
-secure = ["pyOpenSSL (>=0.14)", "cryptography (>=1.3.4)", "idna (>=2.0.0)", "certifi", "ipaddress"]
-socks = ["PySocks (>=1.5.6,<1.5.7 || >1.5.7,<2.0)"]
 
 [[package]]
 category = "dev"
@@ -1222,10 +1044,6 @@ version = "0.6.0"
 [package.dependencies]
 more-itertools = "*"
 
-[package.extras]
-docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
-testing = ["pathlib2", "contextlib2", "unittest2"]
-
 [[package]]
 category = "main"
 description = "Interfaces for Python"
@@ -1236,11 +1054,6 @@ version = "4.6.0"
 
 [package.dependencies]
 setuptools = "*"
-
-[package.extras]
-docs = ["sphinx", "repoze.sphinx.autointerface"]
-test = ["zope.event"]
-testing = ["zope.event", "nose", "coverage"]
 
 [metadata]
 content-hash = "0da5a4a6ac0a3676aba7855098264522f114bb2e3ad444f1f42f418625936d8d"
@@ -1274,7 +1087,7 @@ daphne = ["2329b7a74b5559f7ea012879c10ba945c3a53df7d8d2b5932a904e3b4c9abcc2", "3
 decorator = ["86156361c50488b84a3f148056ea716ca587df2f0de1d34750d35c21312725de", "f069f3a01830ca754ba5258fde2278454a0b5b79e0d7f5c13b3b97e57d4acff6"]
 defusedxml = ["6687150770438374ab581bb7a1b327a847dd9c5749e396102de3fad4e8a3ef93", "f684034d135af4c6cbb949b8a4d2ed61634515257a67299e5f940fbaa34377f5"]
 dj-database-url = ["4aeaeb1f573c74835b0686a2b46b85990571159ffc21aa57ecd4d1e1cb334163", "851785365761ebe4994a921b433062309eb882fedd318e1b0fcecc607ed02da9"]
-django = ["148a4a2d1a85b23883b0a4e99ab7718f518a83675e4485e44dc0c1d36988c5fa", "deb70aa038e59b58593673b15e9a711d1e5ccd941b5973b30750d5d026abfd56"]
+django = ["1226168be1b1c7efd0e66ee79b0e0b58b2caa7ed87717909cd8a57bb13a7079a", "9a4635813e2d498a3c01b10c701fe4a515d76dd290aaa792ccb65ca4ccb6b038"]
 entrypoints = ["589f874b313739ad35be6e0cd7efde2a4e9b6fea91edcc34e58ecbb8dbe56d19", "c70dd71abe5a8c85e55e12c19bd91ccfeec11a6e99044204511f9ed547d48451"]
 execnet = ["cacb9df31c9680ec5f95553976c4da484d407e85e41c83cb812aa014f0eddc50", "d4efd397930c46415f62f8a31388d6be4f27a91d7550eb79bc64a756e0056547"]
 flake8 = ["19241c1cbc971b9962473e4438a2ca19749a7dd002dd1a946eaba171b4114548", "8e9dfa3cecb2400b3738a42c54c3043e821682b9c840b0448c0503f781130696"]
@@ -1328,7 +1141,7 @@ pytest-xdist = ["3489d91516d7847db5eaecff7a2e623dba68984835dbe6cedb05ae126c4fb17
 python-rapidjson = ["185309fd4cd7ee913303e75646571bc63797b31e73181b6e5db4706efe8a4af4", "204d38a959b23df83f8c7134d9215eca5e71bb39b37222a8f373f5d465d7ed1e", "27f852fa8e8e644ebbf0bc6d1fcbadecf4304c8e0cc1a52c48094150488dc14b", "296701017be311ee8fb8ed3ad818b6141fe56f7fbf664294aabbd07d5d52b373", "316d60ba4cda1b9e10e1983864b8c63472f67639f27eac3de4535c8f4a082e23", "402fe264c53d25b8c59a1bf476f37c2b12252a956067cb0f43092829c4907ff6", "44cec74783acde5b5b1fefc0e2898cdaec31b3c00b567b338df9cf780a9f8476", "4ee4f987010889c32cb68731cb3e3595a249ad549b0d00ccc78d4453dc0703d2", "59364379a4108d95aad9c2ab84705cbdba6e8b1b0b2d70dbd5430e3c97f691a9", "5b01e1cfb3a1a3797ce574aa6f5aaa7a29023c300b4f0969571b9803bfd4627c", "67fed890718a2475fd3f31226a3575959936ae010b16739df257f99936c14d76", "6942005bed4be7fb8fd04ff691d93fc19640da8dbe6c95269a8dbbc9350a720c", "9753c657d65550d9ad634cf11743e7e68d295b9290a997ee08a9538d57f1cf8d", "bd25811c3737ba364542bc9803f358551e6a996abd0a3e66553e026576b219ee", "bd546fe7a28d756840d8b88d84e813d5f4ad410d47680039f3a544181141289b", "d569115c7dd81e2255a8409215dbc8083e56ab4e1619f5b3646790ae8d198933", "e36bd2238b7a8d02cb6cc916bb1abbc048a02432039bba76cf7faa55862f5c2a", "e6abde898f86eae47b86b1142c8417e30c823a442479e435855aa15046ed63e3", "e6add37dcbfa42f21bc602f203f4427274e0b651e1f0f8aa02ffd9c5367031b5", "ea83e31069debb458672dc25c9283da154874713829f568cef88d998064dd0d3", "fe0ce76fc0e224edaede0e02fa480c0aac10825503a466fe72c3c0a99b60f9df"]
 python3-openid = ["0086da6b6ef3161cfe50fb1ee5cceaf2cda1700019fda03c2c5c440ca6abe4fa", "628d365d687e12da12d02c6691170f4451db28d6d68d050007e4a40065868502"]
 pytz = ["26c0b32e437e54a18161324a2fca3c4b9846b74a8dccddd843113109e1116b32", "c894d57500a4cd2d5c71114aaab77dbab5eabd9022308ce5ac9bb93a60a6f0c7"]
-pyuwsgi = ["15a4626740753b0d0dfeeac7d367f9b2e89ab6af16c195927e60f75359fc1bbc", "24c40c3b889eb9f283d43feffbc0f7c7fc024e914451425156ddb68af3df1e71", "393737bd43a7e38f0a4a1601a37a69c4bf893635b37665ff958170fdb604fdb7", "5a08308f87e639573c1efaa5966a6d04410cd45a73c4586a932fe3ee4b56369d", "5f4b36c0dbb9931c4da8008aa423158be596e3b4a23cec95a958631603a94e45", "7c31794f71bbd0ccf542cab6bddf38aa69e84e31ae0f9657a2e18ebdc150c01a", "802ec6dad4b6707b934370926ec1866603abe31ba03c472f56149001b3533ba1", "814d73d4569add69a6c19bb4a27cd5adb72b196e5e080caed17dbda740402072", "829299cd117cf8abe837796bf587e61ce6bfe18423a3a1c510c21e9825789c2c", "85f2210ceae5f48b7d8fad2240d831f4b890cac85cd98ca82683ac6aa481dfc8", "861c94442b28cd64af033e88e0f63c66dbd5609f67952dc18694098b47a43f3a", "957bc6316ffc8463795d56d9953d58e7f32aa5aad1c5ac80bc45c69f3299961e", "9760c3f56fb5f15852d163429096600906478e9ed2c189a52f2bb21d8a2a986c", "a4b24703ea818196d0be1dc64b3b57b79c67e8dee0cfa207a4216220912035a7", "ad7f4968c1ddbf139a306d9b075360d959cc554d994ba5e1f512af9a40e62357", "b1127d34b90f74faf1707718c57a4193ac028b9f4aec0238638983132297d456", "bcb04d6ec644b3e08d03c64851e06edd7110489261e50627a4bcadf66ff6920e", "bebfebb9ee83d7cf37668bf54275b677b7ae283e84a944f9f3ac6a4b66f95d4b", "c29892dafc65a8b6eb95823fa4bac7754ca3fd1c28ab8d2a973289531b340a27", "cb296b50b51ba022b0090b28d032ff1dd395a6db03672b65a39e83532edad527", "ce777ebdf49ce736fc04abf555b5c41ab3f130127543a689dcf8d4871cd18fe4", "d8b4bf930b6a19bc9ee982b9163d948c87501ad91b71516924e8ed25fe85d2ee", "e2a420f2c4d35f3ec0b7e752a80d7bd385e2c5a64f67c05f2d2d74230e3114b6", "fed899ce96f4f2b4d1b9f338dd145a4040ee1d8a5152213af0dd8d4a4d36e9fe"]
+pyuwsgi = ["15a4626740753b0d0dfeeac7d367f9b2e89ab6af16c195927e60f75359fc1bbc", "24c40c3b889eb9f283d43feffbc0f7c7fc024e914451425156ddb68af3df1e71", "393737bd43a7e38f0a4a1601a37a69c4bf893635b37665ff958170fdb604fdb7", "5a08308f87e639573c1efaa5966a6d04410cd45a73c4586a932fe3ee4b56369d", "5f4b36c0dbb9931c4da8008aa423158be596e3b4a23cec95a958631603a94e45", "7c31794f71bbd0ccf542cab6bddf38aa69e84e31ae0f9657a2e18ebdc150c01a", "802ec6dad4b6707b934370926ec1866603abe31ba03c472f56149001b3533ba1", "814d73d4569add69a6c19bb4a27cd5adb72b196e5e080caed17dbda740402072", "829299cd117cf8abe837796bf587e61ce6bfe18423a3a1c510c21e9825789c2c", "85f2210ceae5f48b7d8fad2240d831f4b890cac85cd98ca82683ac6aa481dfc8", "861c94442b28cd64af033e88e0f63c66dbd5609f67952dc18694098b47a43f3a", "957bc6316ffc8463795d56d9953d58e7f32aa5aad1c5ac80bc45c69f3299961e", "9760c3f56fb5f15852d163429096600906478e9ed2c189a52f2bb21d8a2a986c", "9fdfb98a2992de01e8efad2aeed22c825e36db628b144b2d6b93d81fb549f811", "a4b24703ea818196d0be1dc64b3b57b79c67e8dee0cfa207a4216220912035a7", "ad7f4968c1ddbf139a306d9b075360d959cc554d994ba5e1f512af9a40e62357", "b1127d34b90f74faf1707718c57a4193ac028b9f4aec0238638983132297d456", "bcb04d6ec644b3e08d03c64851e06edd7110489261e50627a4bcadf66ff6920e", "bebfebb9ee83d7cf37668bf54275b677b7ae283e84a944f9f3ac6a4b66f95d4b", "c29892dafc65a8b6eb95823fa4bac7754ca3fd1c28ab8d2a973289531b340a27", "cb296b50b51ba022b0090b28d032ff1dd395a6db03672b65a39e83532edad527", "ce777ebdf49ce736fc04abf555b5c41ab3f130127543a689dcf8d4871cd18fe4", "d8b4bf930b6a19bc9ee982b9163d948c87501ad91b71516924e8ed25fe85d2ee", "e2a420f2c4d35f3ec0b7e752a80d7bd385e2c5a64f67c05f2d2d74230e3114b6", "ef5eb630f541af6b69378d58594be90a0922fa6d6a50a9248c25b9502585f6bf", "fed899ce96f4f2b4d1b9f338dd145a4040ee1d8a5152213af0dd8d4a4d36e9fe"]
 raven = ["3fa6de6efa2493a7c827472e984ce9b020797d0da16f1db67197bcc23c8fae54", "44a13f87670836e153951af9a3c80405d36b43097db869a36e92809673692ce4"]
 redis = ["98a22fb750c9b9bb46e75e945dc3f61d0ab30d06117cbb21ff9cd1d315fedd3b", "c504251769031b0dd7dd5cf786050a6050197c6de0d37778c80c08cb04ae8275"]
 requests = ["11e007a8a2aa0323f5a921e9e6a2d7e4e67d9877e85773fba9ba6419025cbeb4", "9cf5292fcd0f598c671cfc1e0d7d1a7f13bb8085e9a590f48c010551dc6c4b31"]
